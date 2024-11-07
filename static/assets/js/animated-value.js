@@ -3,7 +3,7 @@
 
 // ANIMACION PARA LA ANIMACION DEL CATALOGO EN EL PRECIO
 document.addEventListener("DOMContentLoaded", () => {
-    const duration = 2000; // Duración de la animación en milisegundos
+    const duration = 3500; // Duración de la animación en milisegundos
 
     function animateValue(element, start, end, duration) {
         const range = end - start;

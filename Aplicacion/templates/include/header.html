@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>{% block title %} {% endblock %}</title>
+    <!-- Favicons -->
+    <link rel="icon" href="{% static 'assets/imagen/icono/icono.ico' %}" sizes="32x32" type="image/x-icon">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
@@ -34,12 +36,14 @@
                 </div>
             </div>
             <ul class="sidebar-nav">
+                <hr class="m-0 p-0 text-white">
                 <li class="sidebar-item">
                     <a href="{% url 'T_Inicio' %}" class="sidebar-link">
                         <i class="lni lni-home"></i>
                         <span>INICIO</span>
                     </a>
                 </li>
+                <hr class="m-0 p-0 text-white">
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#darAlta" aria-expanded="false" aria-controls="auth">
@@ -58,32 +62,22 @@
                         </li>
                         <hr class="m-0 p-0 text-white">
                         <li class="sidebar-item">
+                            <a href="{% url 'T_Estatus' %}" class="sidebar-link pl-5">ESTATUS</a>
+                        </li>
+                        <hr class="m-0 p-0 text-white">
+                        <li class="sidebar-item">
                             <a href="{% url 'T_Proyecto' %}" class="sidebar-link pl-5">PROYECTO</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-layout"></i>
-                        <span>REPORTE</span>
-                    </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">POR DIA</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">POR CATEGORIA</a>
                         </li>
                     </ul>
                 </li>
                 <hr class="m-0 p-0 text-white">
                 <li class="sidebar-item">
-                    <a href="{% url 'T_Estatus' %}" class="sidebar-link">
+                    <a href="{% url 'C_Proyecto' %}" class="sidebar-link">
                         <i class="lni lni-layout"></i>
-                        <span>ESTATUS</span>
+                        <span>CURSO PROYECTO</span>
                     </a>
                 </li>
+                <hr class="m-0 p-0 text-white">
             </ul>
         </aside>
         <div class="main p-3">

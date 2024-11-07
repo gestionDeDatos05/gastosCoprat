@@ -7,8 +7,10 @@ from django.db.models import Sum
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------VISTA PRICIPAL HOME O INCIIO-----------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 def inicio(request):
+    return render(request, 'include/index.html')
+
+def proyecto(request):
     categoria = tblCategoriaGasto.objects.all()
     # Obtener la lista de proyectos con los campos deseados
     proyectos = tblAltaProyecto.objects.all().values("ID", "Folio", "IDEstatus_id__Descripcion", "IDCliente_id__Nombre", "Proyecto", "Descripcion", "FechaInicio", "Fechafinal", "GastoTotal")
@@ -23,9 +25,11 @@ def inicio(request):
         fecha_inicial = proyecto['FechaInicio']
         fecha_final = proyecto['Fechafinal']    
         dias_totales = (fecha_final - fecha_inicial).days
-        dias_restantes = (fecha_final - fecha_actual).days
+        dias_restantes = (fecha_actual - fecha_inicial).days
+        dias_para_porcentaje = (fecha_final - fecha_actual).days
+        
 
-        porcentaje_acumulado = ((dias_totales - dias_restantes) / dias_totales) * 100 if dias_totales > 0 else 0
+        porcentaje_acumulado = ((dias_totales - dias_para_porcentaje) / dias_totales) * 100 if dias_totales > 0 else 0
         procentaje = int(porcentaje_acumulado)
 
         # Crear un nuevo diccionario con toda la información
@@ -46,7 +50,7 @@ def inicio(request):
         # Añadir el diccionario a la lista
         proyectos_con_dias.append(proyecto_info)
     
-    return render(request, 'include/index.html', {'categoria': categoria, 'proyectos': proyectos_con_dias, 'montoXProyecto':montoXProyecto})
+    return render(request, 'Proceso/Curso/index.html', {'categoria': categoria, 'proyectos': proyectos_con_dias, 'montoXProyecto':montoXProyecto})
 
 
 

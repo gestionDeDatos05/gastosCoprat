@@ -5,7 +5,7 @@
 
 {% block body %}
 <div class="contenedor-tabla-alta">
-    <h3 class="titulo-contenedor"><a href="{% url 'T_Inicio' %}"><i class="lni lni-chevron-left-circle"></i></a><strong>
+    <h3 class="titulo-contenedor"><a href="{% url 'C_Proyecto' %}"><i class="lni lni-chevron-left-circle"></i></a><strong>
             {{context.folio}} - {{context.proyecto}}</strong></h3>
     <h5><strong>{{context.cliente}}</strong></h5>
     <h5 class="texto-contenedor mb-4">{{context.descripcion}}</h5>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="{% url 'T_Inicio'%}">
+                    <a href="{% url 'C_Proyecto'%}">
                         <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
                     </a>
                 </form>

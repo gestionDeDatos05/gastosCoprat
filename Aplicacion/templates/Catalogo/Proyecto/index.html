@@ -35,7 +35,7 @@
                         <div class="col-8">
                             <label for="exampleInputEmail1" class="form-label"><b>CLIENTE *</b></label>
                             <select class="form-select" aria-label="Default select example" name="cliente" required>
-                                <option selected>Seleccione un cliente</option>
+                                <option value="">Seleccione un cliente</option>
                                 {% for data in cliente %}
                                 <option value="{{data.ID}}">{{data.Nombre}}</option>
                                 {% endfor %}

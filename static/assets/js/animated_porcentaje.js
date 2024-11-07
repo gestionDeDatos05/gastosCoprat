@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (current < target) {
                 current++;
                 counter.textContent = current + "%"; // Actualizar con el valor actual y el símbolo de porcentaje
-                setTimeout(updateCounter, 35); // Ajustar la velocidad de la animación
+                setTimeout(updateCounter, 10); // Ajustar la velocidad de la animación
             } else {
                 counter.textContent = target + "%"; // Mostrar el valor final con el símbolo de porcentaje
             }
