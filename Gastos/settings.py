@@ -54,6 +54,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Gastos.urls'
 
+CSRF_TRUSTED_ORIGINS = ['https://gastoscoprat-production.up.railway.app']
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
