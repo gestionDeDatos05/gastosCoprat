@@ -1,0 +1,182 @@
+{% extends "include/header.html" %}
+{% load static %}
+
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><a href="{% url 'T_Inicio' %}"><i class="lni lni-chevron-left-circle"></i></a><strong>
+            {{context.folio}} - {{context.proyecto}}</strong></h3>
+    <h5><strong>{{context.cliente}}</strong></h5>
+    <h5 class="texto-contenedor mb-4">{{context.descripcion}}</h5>
+    <hr class="mb-4">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 col-lg-4 form-alta">
+            <div class="card card-contenido-alta">
+                <h4><strong>Agregar gastos del proyecto</strong></h4>
+                <hr>
+                {% if messages %}
+                {% for message in messages %}
+                <div
+                    class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form action="{% url 'GD_Proyecto' %}" method="POST" autocomplete="off">
+                    <input type="hidden" value="{{context.id}}" name="idProyecto">
+                    <input type="hidden" value="{{context.folio}}" name="folio">
+                    <input type="hidden" value="{{context.cliente}}" name="cliente">
+                    <input type="hidden" value="{{context.proyecto}}" name="proyecto">
+                    <input type="hidden" value="{{context.descripcion}}" name="descripcionProyecto">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>CATEGORIA *</b></label>
+                            <select class="form-select" aria-label="Default select example" name="categoria" required>
+                                <option value="">Seleccione la categoria</option>
+                                {% for data in selectCategoria %}
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>FORMA DE PAGO *</b></label>
+                            <select class="form-select" aria-label="Default select example" name="pago" required>
+                                <option value="">Seleccione el pago</option>
+                                {% for data in selectPago %}
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>FACTURA *</b></label>
+                            <input type="text" class="form-control" placeholder="Ingrese la factura" name="factura"
+                                required autofocus>
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>MONTO *</b></label>
+                            <input type="number" class="form-control" placeholder="Ingrese el monto" name="monto"
+                                step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class=" mb-3">
+                        <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                        <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
+                            name="descripcion" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>PROVEEDOR *</b></label>
+                            <input class="form-control" list="datalistOptions" name="proveedor"
+                                placeholder="Ingrese el proveedor" required>
+                            <datalist id="datalistOptions">
+                                {% for proveedores in proveedor %}
+                                <option value="{{proveedores.Proveedor}}">
+                                    {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="col-6">
+                            <label for="fechaFinal" class="form-label"><b>FECHA *</b></label>
+                            <input type="date" class="form-control" value="{{ fecha_actual }}" name="fecha" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="{% url 'T_Inicio'%}">
+                        <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-8 tabla-alta">
+            <div class="card card-contenido-alta">
+                <h4><strong>Ver gastos registrados de este proyecto</strong></h4>
+                <hr>
+                <div class="table-responsive" style="max-width: 7000px; overflow-y: auto;">
+                    <table class="table table-hover custom-hover">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Monto</th>
+                                <th>Forma de pago</th>
+                                <th>Factura</th>
+                                <th>Categoria</th>
+                                <th>Descripción</th>
+                                <th>Proveedor</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for datos in detalleProyecto %}
+                            <tr>
+                                <td>{{datos.Fecha|date:"d/m/Y" }}</td>
+                                <td>$ {{datos.Monto}}</td>
+                                <td>{{datos.IDFormaDePago_id__Descripcion}}</td>
+                                <td>{{datos.Factura}}</td>
+                                <td>{{datos.IDCategoria_id__Descripcion}}</td>
+                                <td>{{datos.Descripcion}}</td>
+                                <td>{{datos.Proveedor}}</td>
+                                <td>
+                                    <form action="{% url 'ED_Proyecto' %}" method="POST" autocomplete="off">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{datos.ID}}" name="id">
+                                        <input type="hidden" value="{{context.id}}" name="idProyecto">
+                                        <input type="hidden" value="{{context.folio}}" name="folio">
+                                        <input type="hidden" value="{{context.cliente}}" name="cliente">
+                                        <input type="hidden" value="{{context.proyecto}}" name="proyecto">
+                                        <input type="hidden" value="{{context.descripcion}}" name="descripcionProyecto">                                        
+                                        <button class="btn btn-success">Editar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contenedor-tabla-alta mt-3">
+    <h3 class="titulo-contenedor"><strong>DETALLE DE GASTOS EN "CATEGORIA"</strong></h3>
+    <hr class="mb-4">
+    <div class="row">
+        {% for datos in montoXCategoria %}
+        {% if datos.IDProyecto_id|add:0 == context.id|add:0 %}
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            <div class="card card-contenedor-1 mb-5">
+                <div class="card-body">
+                    <h5 class="card-title-contenedor-1"><strong>{{ datos.IDCategoria_id__Descripcion }}</strong></h5>
+                    <hr>
+                    <p class="card-text-contenedor-1" id="{{datos.IDProyecto_id}}" data-end-value="">$ {{ datos.total_monto }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="contenedor-tabla-alta mt-3">
+    <h3 class="titulo-contenedor"><strong>DETALLE DE GASTOS EN "FORMAS DE PAGO"</strong></h3>
+    <hr class="mb-4">
+    <div class="row">
+        {% for datos in montoXPago %}
+        {% if datos.IDProyecto_id|add:0 == context.id|add:0 %}
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            <div class="card card-contenedor-1 mb-5">
+                <div class="card-body">
+                    <h5 class="card-title-contenedor-1"><strong>{{ datos.IDFormaDePago_id__Descripcion }}</strong></h5>
+                    <hr>
+                    <p class="card-text-contenedor-1" id="{{datos.IDProyecto_id}}" data-end-value="">$ {{ datos.total_monto }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

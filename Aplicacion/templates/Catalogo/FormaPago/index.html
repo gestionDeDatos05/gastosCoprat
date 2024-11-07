@@ -1,0 +1,72 @@
+{% extends "include/header.html" %}
+{% load static %}
+
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><strong>FORMA DE PAGO</strong></h3>
+    <h5 class="texto-contenedor mb-4">Aqui se muestra la forma de pago dados de alta</h5>
+    <hr class="mb-4">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 col-lg-4 form-alta">
+            <div class="card card-contenido-alta">
+                <h4><strong>Dar de alta forma de pago</strong></h4>
+                <hr>
+                {% if messages %}
+                {% for message in messages %}
+                <div
+                    class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form action="{% url 'G_FormaDePago' %}" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN</b></label>
+                        <input type="text" class="form-control" placeholder="Ingrese el metodo de pago"
+                            name="descripcion" required autofocus>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="{% url 'T_Forma_de_pago'%}">
+                        <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-8 tabla-alta">
+            <div class="card card-contenido-alta">
+                <h4><strong>Mostrar forma de pago registrada</strong></h4>
+                <hr>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for datos in data %}
+                        <tr>
+                            <td>{{datos.ID}}</td>
+                            <td>{{datos.Descripcion}}</td>
+                            <td>
+                                <form action="{% url 'E_Forma_de_pago' %}" method="POST" autocomplete="off">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{datos.ID}}" name="id">
+                                    <button class="btn btn-success">Editar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

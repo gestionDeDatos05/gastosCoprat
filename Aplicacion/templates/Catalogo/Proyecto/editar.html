@@ -1,0 +1,94 @@
+{% extends "include/header.html" %}
+{% load static %}
+
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<style>
+
+</style>
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><strong>PROYECTO</strong></h3>
+    <h5 class="texto-contenedor mb-4">Aqui se muestra los proyectos dados de alta</h5>
+    <hr class="mb-4">
+    <div class="row">
+        <div class="editar-alta">
+            <div class="card card-contenido-alta">
+                <h4><strong>Formulario para dar de alta proyectos</strong></h4>
+                <hr>
+                {% if messages %}
+                {% for message in messages %}
+                <div
+                    class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form action="{% url 'A_Proyecto' %}" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <input type="hidden" name="id" value="{{TEProyecto.ID}}">
+                            <label for="exampleInputEmail1" class="form-label"><b>FOLIO *</b></label>
+                            <input type="text" class="form-control" placeholder="Ingrese el folio" name="Folio"
+                                value="{{TEProyecto.Folio}}" required autofocus>
+                        </div>
+                        <div class="col-8">
+                            <label for="exampleInputEmail1" class="form-label"><b>CLIENTE *</b></label>
+                            <select class="form-select" aria-label="Default select example" name="cliente" required>
+                                <option value="{{FiltradoCliente.ID}}">
+                                    --------{{FiltradoCliente.Nombre}}--------
+                                </option>
+                                {% for data in FECliente %}
+                                <option value="{{data.ID}}">{{data.Nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-7">
+                            <label for="exampleInputEmail1" class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
+                            <input type="text" class="form-control" value="{{TEProyecto.Proyecto}}"
+                                placeholder="Ingrese el nombre del proyecto" name="proyecto" required>
+                        </div>
+                        <div class="col-5">
+                            <label for="exampleInputEmail1" class="form-label"><b>ESTATUS *</b></label>
+                            <select class="form-select" aria-label="Default select example" name="estatus" required>
+                                <option value="{{FiltradoEstatus.ID}}">
+                                    --------{{FiltradoEstatus.Descripcion}}--------
+                                </option>
+                                {% for data in FEEstatus %}
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                        <input type="text" class="form-control" value="{{TEProyecto.Descripcion}}"
+                            placeholder="Ingrese una breve descripción" name="descripcion" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="fechaInicio" class="form-label"><b>FECHA INICIO *</b></label>
+                            <input type="date" class="form-control" value="{{FechaInicio|date:'Y-m-d'}}"
+                                id="fechaInicio" name="fechaInicio" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="fechaFinal" class="form-label"><b>FECHA FINAL *</b></label>
+                            <input type="date" class="form-control" value="{{Fechafinal|date:'Y-m-d'}}" id="fechaFinal"
+                                name="fechaFinal" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="{% url 'T_Proyecto'%}">
+                        <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

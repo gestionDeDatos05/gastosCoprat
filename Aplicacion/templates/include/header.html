@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{% block title %} {% endblock %}</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <svg width="40" height="40" viewBox="0 0 25 24" fill="#FFF" class="bg-white text-white">
+                        <path
+                            d="M3.5625 6C3.5625 5.58579 3.89829 5.25 4.3125 5.25H20.3125C20.7267 5.25 21.0625 5.58579 21.0625 6C21.0625 6.41421 20.7267 6.75 20.3125 6.75L4.3125 6.75C3.89829 6.75 3.5625 6.41422 3.5625 6Z"
+                            fill="#343C54" />
+                        <path
+                            d="M3.5625 18C3.5625 17.5858 3.89829 17.25 4.3125 17.25L20.3125 17.25C20.7267 17.25 21.0625 17.5858 21.0625 18C21.0625 18.4142 20.7267 18.75 20.3125 18.75L4.3125 18.75C3.89829 18.75 3.5625 18.4142 3.5625 18Z"
+                            fill="#343C54" />
+                        <path
+                            d="M4.3125 11.25C3.89829 11.25 3.5625 11.5858 3.5625 12C3.5625 12.4142 3.89829 12.75 4.3125 12.75L20.3125 12.75C20.7267 12.75 21.0625 12.4142 21.0625 12C21.0625 11.5858 20.7267 11.25 20.3125 11.25L4.3125 11.25Z"
+                            fill="#343C54" />
+                    </svg>
+
+                </button>
+                <div class="sidebar-logo">
+                    <a href="#">PROYECTOS</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="{% url 'T_Inicio' %}" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span>INICIO</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#darAlta" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-agenda"></i>
+                        <span>DAR DE ALTA</span>
+                    </a>
+                    <ul id="darAlta" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{% url 'T_Clientes' %}" class="sidebar-link pl-5">CLIENTE</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'T_Forma_de_pago' %}" class="sidebar-link pl-5">FORMA DE PAGO</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'T_Categoria' %}" class="sidebar-link pl-5">CATEGORIA</a>
+                        </li>
+                        <hr class="m-0 p-0 text-white">
+                        <li class="sidebar-item">
+                            <a href="{% url 'T_Proyecto' %}" class="sidebar-link pl-5">PROYECTO</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-layout"></i>
+                        <span>REPORTE</span>
+                    </a>
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">POR DIA</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">POR CATEGORIA</a>
+                        </li>
+                    </ul>
+                </li>
+                <hr class="m-0 p-0 text-white">
+                <li class="sidebar-item">
+                    <a href="{% url 'T_Estatus' %}" class="sidebar-link">
+                        <i class="lni lni-layout"></i>
+                        <span>ESTATUS</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <div class="main p-3">
+            {% block body %}
+
+            {% endblock %}
+
+        </div>
+    </div>
+
+
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/script.js' %}"></script>
+</body>
+
+</html>

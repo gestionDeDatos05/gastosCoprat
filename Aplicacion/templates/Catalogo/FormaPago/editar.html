@@ -1,0 +1,41 @@
+{% extends "include/header.html" %}
+{% load static %}
+
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><strong>Forma de pago</strong></h3>
+    <h5 class="texto-contenedor mb-4">Aqui se puede editar la forma de pago registrada</h5>
+    <hr class="mb-4">
+    <div class="editar-alta">
+        <div class="card card-contenido-alta">
+            <h4><strong>Editar forma de pago</strong></h4>
+            <hr>
+            {% if messages %}
+            {% for message in messages %}
+            <div
+                class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <form action="{% url 'A_Forma_de_pago' %}" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="hidden" name="id" value="{{TEFormaPago.ID}}">
+                    <label class="form-label"><b>Descripción</b></label>
+                    <input type="text" class="form-control" placeholder="Ingrese la descripcion de la forma de pago"
+                        value="{{ TEFormaPago.Descripcion }}" name="descripcion" required autofocus>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'T_Forma_de_pago'%}">
+                    <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

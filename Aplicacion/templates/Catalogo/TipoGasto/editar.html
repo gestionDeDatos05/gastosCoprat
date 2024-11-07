@@ -1,0 +1,41 @@
+{% extends "include/header.html" %}
+{% load static %}
+
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><strong>CATEGORIA</strong></h3>
+    <h5 class="texto-contenedor mb-4">Aqui se puede editar la categoria seleccionada</h5>
+    <hr class="mb-4">
+    <div class="editar-alta">
+        <div class="card card-contenido-alta">
+            <h4><strong>Editar categoria</strong></h4>
+            <hr>
+            {% if messages %}
+            {% for message in messages %}
+            <div
+                class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <form action="{% url 'A_Categoria' %}" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="hidden" name="id" value="{{TECategoria.ID}}">
+                    <label class="form-label"><b>DESCRIPCIÓN</b></label>
+                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la categoria"
+                        value="{{ TECategoria.Descripcion }}" name="descripcion" required>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'T_Categoria'%}">
+                    <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

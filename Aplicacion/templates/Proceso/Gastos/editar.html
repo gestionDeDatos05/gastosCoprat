@@ -1,0 +1,112 @@
+{% extends "include/header.html" %}
+{% load static %}
+
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><a href="{% url 'T_Inicio' %}"><i class="lni lni-chevron-left-circle"></i></a><strong>
+            {{context.folio}} - {{context.proyecto}}</strong></h3>
+    <h5><strong>{{context.cliente}}</strong></h5>
+    <h5 class="texto-contenedor mb-4">{{context.descripcion}}</h5>
+    <hr class="mb-4">
+    <div class="row">
+        <div class="editar-alta">
+            <div class="card card-contenido-alta">
+                <h4><strong>Agregar gastos del proyecto</strong></h4>
+                <hr>
+                {% if messages %}
+                {% for message in messages %}
+                <div
+                    class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form action="{% url 'AD_Proyecto' %}" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{TEProyecto.ID}}">
+                    <input type="hidden" value="{{context.id}}" name="idProyecto">
+                    <input type="hidden" value="{{context.folio}}" name="folio">
+                    <input type="hidden" value="{{context.cliente}}" name="cliente">
+                    <input type="hidden" value="{{context.proyecto}}" name="proyecto">
+                    <input type="hidden" value="{{context.descripcion}}" name="descripcionProyecto">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>CATEGORIA *</b></label>
+                            <select class="form-select" aria-label="Default select example" name="categoria" required>
+                                <option value="{{FiltradoCategoria.ID}}">
+                                    --------{{FiltradoCategoria.Descripcion}}--------
+                                </option>
+                                {% for data in FECategoria %}
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>FORMA DE PAGO *</b></label>
+                            <select class="form-select" aria-label="Default select example" name="pago" required>
+                                <option value="{{FiltradoFormaPago.ID}}">
+                                    --------{{FiltradoFormaPago.Descripcion}}--------
+                                </option>
+                                {% for data in FEFormaPago %}
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>FACTURA *</b></label>
+                            <input type="text" class="form-control" placeholder="Ingrese la factura" name="factura"
+                                value="{{TEProyecto.Factura}}" required autofocus>
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>MONTO *</b></label>
+                            <input type="number" class="form-control" placeholder="Ingrese el monto" name="monto"
+                                value="{{TEProyecto.Monto}}" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class=" mb-3">
+                        <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                        <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
+                            value="{{TEProyecto.Descripcion}}" name="descripcion" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>PROVEEDOR *</b></label>
+                            <input class="form-control" list="datalistOptions" name="proveedor"
+                                value="{{TEProyecto.Proveedor}}" placeholder="Ingrese el proveedor" required>
+                            <datalist id="datalistOptions">
+                                {% for proveedores in proveedor %}
+                                <option value="{{proveedores.Proveedor}}">
+                                    {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="col-6">
+                            <label for="fechaFinal" class="form-label"><b>FECHA *</b></label>
+                            <input type="date" class="form-control" value="{{Fecha|date:'Y-m-d'}}" name="fecha"
+                                required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary col-12">Actualizar</button>
+
+                </form>
+                <form action="{% url 'CD_Proyecto' %}" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{context.id}}">
+                    <input type="hidden" name="folio" value="{{context.folio}}">
+                    <input type="hidden" name="cliente" value="{{context.cliente}}">
+                    <input type="hidden" name="proyecto" value="{{context.proyecto}}">
+                    <input type="hidden" name="descripcion" value="{{context.descripcion}}">
+                    <button class="btn btn-danger col-12 mt-3">Cancelar</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
