@@ -9,11 +9,14 @@
     <!-- Favicons -->
     <link rel="icon" href="{% static 'assets/imagen/icono/icono.ico' %}" sizes="32x32" type="image/x-icon">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="{% static 'assets/css/jquery.dataTables.min.css' %}" rel="stylesheet" crossorigin="anonymous">
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'ruta/select2/select2.min.css' %}" rel="stylesheet" />
     
     <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'jquery/simple-datatables@latest' %}"></script>
+    <script src="{% static 'jquery/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'ruta/select2/select2.min.js' %}"></script>
 </head>
 
@@ -99,6 +102,18 @@
 
         </div>
     </div>
+    <!-- --------------------------------------------------------SCRIPT PARA TABLAS--------------------------------------------------------  -->
+    <script>
+        $(document).ready(function () {
+            $(".tabla_id").DataTable({
+                "pageLength": 100,
+                "lengthMenu": [[50, 100, 150, 200], [50, 100, 150, 200]],
+                "language": {
+                    "url": "{% static 'assets/js/Spanish.json' %}"
+                },
+            });
+        });
+    </script>
 
 
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
