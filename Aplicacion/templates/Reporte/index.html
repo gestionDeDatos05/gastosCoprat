@@ -39,7 +39,8 @@
                             <label class="form-label"><b>PROYECTO *</b></label>
                             <select class="select2 form-select" name="proyecto" required>
                                 {% if proyecto_reporte %}
-                                <option value="{{ proyecto_reporte.ID }}">--- {{ proyecto_reporte.Folio }} - {{ proyecto_reporte.Proyecto }} ---
+                                <option value="{{ proyecto_reporte.ID }}">--- {{ proyecto_reporte.Folio }} - {{
+                                    proyecto_reporte.Proyecto }} ---
                                 </option>
                                 {% endif %}
                                 <option value="todos">Todos los proyectos</option>
@@ -57,7 +58,7 @@
                                 {% endif %}
                                 <option value="todos">Todas las categorias</option>
                                 {% for data in selectCategoria %}
-                                <option value="{{data.ID}}">{{data.ID}} - {{data.Descripcion}}</option>
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -69,7 +70,7 @@
                                 {% endif %}
                                 <option value="todos">Todas las formas de pago</option>
                                 {% for data in selectPago %}
-                                <option value="{{data.ID}}">{{data.ID}} - {{data.Descripcion}}</option>
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -114,28 +115,31 @@
                         <thead>
                             <tr>
                                 <th>FECHA</th>
+                                <th>FOLIO</th>
                                 <th>PROYECTO</th>
                                 <th>CLIENTE</th>
-                                <th>FORMA DE PAGO</th>
                                 <th>MONTO</th>
+
+                                <th>FORMA DE PAGO</th>
                                 <th>FACTURA</th>
                                 <th>CATEGORIA</th>
-                                <th>PROVEEDOR</th>
                                 <th>DESCRIPCION</th>
+                                <th>PROVEEDOR</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for datos in detalleProyecto %}
                             <tr>
                                 <td>{{datos.0|date:"d/m/Y" }}</td>
-                                <td>{{datos.1}} - {{datos.2}}</td>
+                                <td>{{datos.1}}</td>
+                                <td>{{datos.2}}</td>
                                 <td>{{datos.9}}</td>
-                                <td>{{datos.3}}</td>
                                 <td>$ {{datos.4}}</td>
+                                <td>{{datos.3}}</td>
                                 <td>{{datos.5}}</td>
                                 <td>{{datos.6}}</td>
-                                <td>{{datos.8}}</td>
                                 <td>{{datos.7}}</td>
+                                <td>{{datos.8}}</td>
                             </tr>
                             {% endfor %}
                             {% for datos in suma_Total %}
@@ -143,8 +147,8 @@
                                 <td><b>GASTOS TOTAL:</b></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
                                 <td><b>$ {{ datos.0|default:"0" }}</b></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
