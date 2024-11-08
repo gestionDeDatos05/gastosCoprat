@@ -21,7 +21,6 @@ class tblAltaProyecto(models.Model):
     Descripcion = models.CharField(max_length=100, null=True)
     FechaInicio = models.DateField(null=True)
     Fechafinal = models.DateField(null=True)
-    GastoTotal = models.CharField(max_length=60, null=True)
     
 class tblFormaPago(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -38,6 +37,7 @@ class tblProyecto(models.Model):
     IDFormaDePago = models.ForeignKey(tblFormaPago, on_delete=models.DO_NOTHING, null=True)
     IDCategoria = models.ForeignKey(tblCategoriaGasto, on_delete=models.DO_NOTHING, null=True)
     Monto = models.FloatField(null=True)
+    Presupuesto = models.FloatField(null=True)
     Factura = models.CharField(max_length=60, null=True)
     Descripcion = models.CharField(max_length=100, null=True)
     Proveedor = models.CharField(max_length=100, null=True)

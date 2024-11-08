@@ -8,7 +8,6 @@ from Aplicacion.Consultas.Reportes import mostrarR
 urlpatterns = [
      #  Presentacion
     path('', views.inicio, name='T_Inicio'),
-    path('Curso_Proyecto/', views.proyecto, name='C_Proyecto'),
     
     # VISTA PARA MOSTRAR LAS TABLAS DE LOS REGISTROS DADOS DE ALTA
     path('Clientes/', mostrarC.tablaCliente, name='T_Clientes'),

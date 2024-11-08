@@ -176,6 +176,11 @@ a.sidebar-link:hover {
 
 .card-contenedor-2 {
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.card-contenedor-2:hover {
+    transform: scale(1.2); /* Aumenta el tamaño a 120% */
 }
 
 .text-curso-proyecto {
@@ -403,3 +408,39 @@ a.sidebar-link:hover {
 
 /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.dataTable {
+    width: 100% !important;
+}
+
+.dataTables_info {
+    color: var(--text-color);
+}
+
+.dataTables_length select {
+    color: var(--text-color);
+}
+
+/* Cambiar el color del texto del buscador */
+.dataTables_filter input[type="search"] {
+    filter: right !important;
+    background-color: aliceblue;
+    margin-bottom: 3%;
+}
+
+/* Alinear el contenedor del buscador a la derecha */
+.dataTables_filter {
+    float: right;
+    /* Mueve el contenedor de búsqueda al lado derecho */
+}
+
+.dataTables_length {
+    float: left;
+    /* Mueve el selector de cantidad al lado izquierdo */
+}
+
+.table-resposive {
+    padding: 0;
+    margin: 0;
+
+}

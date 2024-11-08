@@ -12,7 +12,7 @@ def reportesProyecto(request):
     # obtener los datos para el formulario de los reportes
     fecha_actual = datetime.now().date()
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
-    selectProyecto = tblAltaProyecto.objects.all()
+    selectProyecto = tblAltaProyecto.objects.filter(IDEstatus_id = 1)
     selectPago = tblFormaPago.objects.all()
     selectCategoria = tblCategoriaGasto.objects.all()   
     proveedor = tblProyecto.objects.values("Proveedor").distinct()    
@@ -52,7 +52,7 @@ def reportesProyecto(request):
             params.append(proveedor_v)
 
         # Añadir condición de fecha siempre
-        conditions.append("Aplicacion_tblProyecto.Fecha BETWEEN %s AND %s")
+        conditions.append("Aplicacion_tblProyecto.Fecha BETWEEN %s AND %s ")
         params.extend([fechaI_v, fechaF_v])
 
         # Construir la consulta final uniendo las condiciones con " AND "
@@ -65,14 +65,16 @@ def reportesProyecto(request):
             LEFT JOIN Aplicacion_tblCliente ON Aplicacion_tblAltaProyecto.IDCliente_id = Aplicacion_tblCliente.ID
             LEFT JOIN Aplicacion_tblFormaPago ON Aplicacion_tblProyecto.IDFormaDePago_id = Aplicacion_tblFormaPago.ID
             LEFT JOIN Aplicacion_tblCategoriaGasto ON Aplicacion_tblProyecto.IDCategoria_id = Aplicacion_tblCategoriaGasto.ID
-            WHERE {where_clause}
+            WHERE {where_clause} AND Aplicacion_tblAltaProyecto.IDEstatus_id = 1
         """
         # Ejecutar la consulta
         with connection.cursor() as cursor:
             cursor.execute(consulta_sql, params)
             reportes = cursor.fetchall()
             
-        consulta_sql_total = f""" SELECT SUM(Aplicacion_tblProyecto.Monto) AS TotalMonto FROM Aplicacion_tblProyecto WHERE {where_clause}"""
+        consulta_sql_total = f""" SELECT SUM(Aplicacion_tblProyecto.Monto) AS TotalMonto FROM Aplicacion_tblProyecto
+        LEFT JOIN Aplicacion_tblAltaProyecto ON Aplicacion_tblProyecto.IDProyecto_id = Aplicacion_tblAltaProyecto.ID
+        WHERE {where_clause} AND Aplicacion_tblAltaProyecto.IDEstatus_id = 1"""
         with connection.cursor() as cursor:
             cursor.execute(consulta_sql_total, params)
             suma_Total = cursor.fetchall()

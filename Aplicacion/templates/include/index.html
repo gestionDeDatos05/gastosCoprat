@@ -4,11 +4,178 @@
 {% block title %}GASTOS POR PROYECTO{% endblock %}
 
 {% block body %}
+
+
 <div class="contenedor-2">
     <h3 class="titulo-contenedor"><strong>CURSO POR PROYECTO</strong></h3>
     <h5 class="texto-contenedor mb-4">Aqui se muestra el avance transurrido en base a la fecha de inicio a la fecha de
         entrega.</h5>
     <hr class="mb-4">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="row">
+        {% for proyecto in proyectos %}
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            <form action="{% url 'D_Proyecto' %}" method="POST" autocomplete="off">
+                <input type="hidden" value="{{proyecto.ID}}" name="id">
+                <input type="hidden" value="{{proyecto.Folio}}" name="folio">
+                <input type="hidden" value="{{proyecto.IDCliente_id__Nombre}}" name="cliente">
+                <input type="hidden" value="{{proyecto.Proyecto}}" name="proyecto">
+                <input type="hidden" value="{{proyecto.Descripcion}}" name="descripcion">
+                <button type="submit" style="background: none; border: none; padding: 0; outline: none;">
+                    {% csrf_token %}
+                    <div class="card card-contenedor-2">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="card-title-contenedor-2"><strong>{{proyecto.Folio}}</strong></h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="card-title-contenedor-2">
+                                        <strong>{{proyecto.IDCliente_id__Nombre}}</strong>
+                                    </h5>
+                                </div>
+                                <h5 class="card-subtitle-contenedor-2"><strong>{{proyecto.Proyecto}}</strong></h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="porcentajes"
+                                style="--porcentaje: {{proyecto.porcentaje_acumulado}}; --color: blue;">
+                                <svg width="180" height="180">
+                                    <circle class="circleGrafica" r="60" cx="50%" cy="50%" pathlength="100" />
+                                    <circle class="circleGrafica" r="60" cx="50%" cy="50%" pathlength="100" />
+                                </svg>
+                                <span id="{{ proyecto.Folio }}" class="h6-form"
+                                    data-target="{{ proyecto.porcentaje_acumulado }}">0 <label for="">%</label></span>
+                            </div>
+                            <h5 class="text-curso-proyecto"><strong>Dias utilizados:</strong> {{proyecto.DiasRestantes}}
+                                / {{proyecto.DiasTotales}}</h5>
+                            {% for monto in montoXProyecto %}
+                            {% if proyecto.ID == monto.IDProyecto_id %}
+                            <h5 class="text-curso-proyecto"><strong>Gasto actual:</strong>
+                                $ {{monto.total_monto|floatformat:2 }}</h5>
+                            {% endif %}
+                            {% endfor %}
+                            <hr>
+                            <h5 class="text-curso-proyecto">{{proyecto.Descripcion}}</h5>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h6 class="c2-fecha-inicio"><strong>Fecha inicio:</strong></h6>
+                                    <p class="c2-fecha-inicio-bd">{{ proyecto.FechaInicio|date:"d/m/Y" }}</p>
 
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="c2-fecha-final"><strong>Fecha Final:</strong></h6>
+                                    <p class="c2-fecha-final-bd">{{proyecto.Fechafinal|date:"d/m/Y" }}</p>
+                                </div>
+                            </div>
+                            <label style="color: blue; text-decoration: underline; cursor: pointer;">Pulse aquí, para
+                                ver mas detalles</label>
+                        </div>
+                    </div>
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'GD_Proyecto' %}" method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label for="exampleInputEmail1" class="form-label"><b>PROYECTO *</b></label><br>
+                                    <select class="select2 form-select w-100" name="idProyecto" required>
+                                        <option value="">Seleccione un proyecto</option>
+                                        {% for data in selectProyecto %}
+                                        <option value="{{data.ID}}">{{data.Folio }} - {{data.Proyecto}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label for="exampleInputEmail1" class="form-label"><b>CATEGORIA *</b></label><br>
+                                    <select class="select2 form-select w-100" name="categoria" required>
+                                        <option value="">Seleccione la categoria</option>
+                                        {% for data in selectCategoria %}
+                                        <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label for="exampleInputEmail1" class="form-label"><b>FORMA DE PAGO
+                                            *</b></label><br>
+                                    <select class="select2 form-select w-100" name="pago" required>
+                                        <option value="">Seleccione el pago</option>
+                                        {% for data in selectPago %}
+                                        <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="exampleInputEmail1" class="form-label"><b>FACTURA *</b></label>
+                                    <input type="text" class="form-control" placeholder="Ingrese la factura"
+                                        name="factura" required autofocus>
+                                </div>
+                                <div class="col-6">
+                                    <label for="exampleInputEmail1" class="form-label"><b>MONTO *</b></label>
+                                    <input type="number" class="form-control" placeholder="Ingrese el monto"
+                                        name="monto" step="0.01" required>
+                                </div>
+                            </div>
+
+                            <div class=" mb-3">
+                                <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                                <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
+                                    name="descripcion" required>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="exampleInputEmail1" class="form-label"><b>PROVEEDOR *</b></label>
+                                    <input class="form-control" list="datalistOptions" name="proveedor"
+                                        placeholder="Ingrese el proveedor" required>
+                                    <datalist id="datalistOptions">
+                                        {% for proveedores in proveedor %}
+                                        <option value="{{proveedores.Proveedor}}">
+                                            {% endfor %}
+                                    </datalist>
+                                </div>
+                                <div class="col-6">
+                                    <label for="fechaFinal" class="form-label"><b>FECHA *</b></label>
+                                    <input type="date" class="form-control" value="{{ fecha_actual }}" name="fecha"
+                                        required>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="submit" class="btn btn-primary" name="inicio">Guardar</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<button type="button" class="BotonAgregar1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div class="sign">+</div>
+    <div class="text">AGREGAR GASTO</div>
+</button>
+
+<script src="{% static 'assets/js/animated-value.js' %}"></script>
+<script src="{% static 'assets/js/animated_porcentaje.js' %}"></script>
 {% endblock %}

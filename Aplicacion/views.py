@@ -8,12 +8,9 @@ from django.db.models import Sum
 # ----------------------------------------------------------------------------VISTA PRICIPAL HOME O INCIIO-----------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def inicio(request):
-    return render(request, 'include/index.html')
-
-def proyecto(request):
     categoria = tblCategoriaGasto.objects.all()
     # Obtener la lista de proyectos con los campos deseados
-    proyectos = tblAltaProyecto.objects.all().values("ID", "Folio", "IDEstatus_id__Descripcion", "IDCliente_id__Nombre", "Proyecto", "Descripcion", "FechaInicio", "Fechafinal", "GastoTotal")
+    proyectos = tblAltaProyecto.objects.filter(IDEstatus_id = 1).values("ID", "Folio", "IDEstatus_id__Descripcion", "IDCliente_id__Nombre", "Proyecto", "Descripcion", "FechaInicio", "Fechafinal")
 
     fecha_actual = datetime.now().date()
     
@@ -49,8 +46,15 @@ def proyecto(request):
 
         # Añadir el diccionario a la lista
         proyectos_con_dias.append(proyecto_info)
-    
-    return render(request, 'Proceso/Curso/index.html', {'categoria': categoria, 'proyectos': proyectos_con_dias, 'montoXProyecto':montoXProyecto})
+        
+    fecha_actual = datetime.now().date()
+    fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
+    selectPago = tblFormaPago.objects.all()
+    selectCategoria = tblCategoriaGasto.objects.all()
+    selectProyecto = tblAltaProyecto.objects.filter(IDEstatus_id = 1)
+    proveedor = tblProyecto.objects.values("Proveedor").distinct()    
+    return render(request, 'include/index.html', {'categoria': categoria, 'proyectos': proyectos_con_dias, 'montoXProyecto':montoXProyecto,
+    'selectPago':selectPago, 'selectCategoria':selectCategoria, 'fecha_actual':fecha_formateada, 'selectProyecto':selectProyecto, 'proveedor':proveedor})
 
 
 
