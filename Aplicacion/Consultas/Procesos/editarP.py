@@ -19,6 +19,7 @@ def editarProyecto(request):
     proyecto = request.POST['proyecto'].upper() # CAMPO proyecto
     folio = request.POST['folio'] # CAMPO folio
     descripcion = request.POST['descripcionProyecto'] # CAMPO descripcion
+    
     context = {'id':id_Proyecto, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}   
     return render(request, "Proceso/Gastos/editar.html",{"context": context, 'TEProyecto': TEProyecto, 'FiltradoCategoria':FiltradoCategoria,
     'FiltradoFormaPago':FiltradoFormaPago, 'Fecha': Fecha, 'FECategoria': FECategoria, 'FEFormaPago': FEFormaPago, 'proveedor':proveedor})

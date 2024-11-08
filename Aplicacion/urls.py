@@ -3,6 +3,7 @@ from . import views
 from Aplicacion.Consultas.Catalogos import agregarC, editarC, mostrarC, actualizarC
 from Aplicacion.Consultas.Procesos import agregarP, editarP, mostrarP, actualizarP
 from Aplicacion.Consultas.Subtablas import agregarS, editarS, mostrarS, actualizarS
+from Aplicacion.Consultas.Reportes import mostrarR
 
 urlpatterns = [
      #  Presentacion
@@ -54,4 +55,7 @@ urlpatterns = [
     path('Actualizar_Estatus/', actualizarS.actualizarEstatus, name='A_Estatus'),
     # GUARDAR DETALLADO DE GASTOS POR PROYECTOS
     path('Guardar_Estatus/', agregarS.guardarEstatus, name='G_Estatus'),
+    
+    # REPORTE GASTOS POR PROYECTOS
+    path('Reporte_gastos_proyecto/', mostrarR.reportesProyecto, name='R_Proyecto'),
 ]

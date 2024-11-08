@@ -33,7 +33,7 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <label for="exampleInputEmail1" class="form-label"><b>CATEGORIA *</b></label>
-                            <select class="form-select" aria-label="Default select example" name="categoria" required>
+                            <select class="select2 form-select" aria-label="Default select example" name="categoria" required>
                                 <option value="">Seleccione la categoria</option>
                                 {% for data in selectCategoria %}
                                 <option value="{{data.ID}}">{{data.Descripcion}}</option>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-6">
                             <label for="exampleInputEmail1" class="form-label"><b>FORMA DE PAGO *</b></label>
-                            <select class="form-select" aria-label="Default select example" name="pago" required>
+                            <select class="select2 form-select" aria-label="Default select example" name="pago" required>
                                 <option value="">Seleccione el pago</option>
                                 {% for data in selectPago %}
                                 <option value="{{data.ID}}">{{data.Descripcion}}</option>
@@ -128,7 +128,7 @@
                                         <input type="hidden" value="{{context.cliente}}" name="cliente">
                                         <input type="hidden" value="{{context.proyecto}}" name="proyecto">
                                         <input type="hidden" value="{{context.descripcion}}" name="descripcionProyecto">                                        
-                                        <button class="btn btn-success">Editar</button>
+                                        <button class="btn btn-success">Editarlo</button>
                                     </form>
                                 </td>
                             </tr>

@@ -34,44 +34,22 @@ def actualizarProyecto(request):
     proyecto = request.POST['proyecto'].upper() # CAMPO proyecto
     folio = request.POST['folio'] # CAMPO folio
     descripcion = request.POST['descripcion'] # CAMPO descripcion
-    
+
     fecha_actual = datetime.now().date()
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
     selectPago = tblFormaPago.objects.all()
     selectCategoria = tblCategoriaGasto.objects.all()
-    context = {'id':id_Proyecto, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}
-
-    detalleProyecto = tblProyecto.objects.filter(IDProyecto = id_Proyecto).values("ID", "IDProyecto_id__Folio", "IDFormaDePago_id__Descripcion", 
-                                "IDCategoria_id__Descripcion", "Monto", "Factura", "Descripcion", "Proveedor", "Fecha")
     
+    context = {'id':id_Proyecto, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}
     proveedor = tblProyecto.objects.values("Proveedor").distinct()
-
+    
     montoXCategoria = tblProyecto.objects.values('IDProyecto_id', 'IDCategoria_id__Descripcion').annotate(total_monto=Sum('Monto'))
     montoXPago = tblProyecto.objects.values('IDProyecto_id', 'IDFormaDePago_id__Descripcion').annotate(total_monto=Sum('Monto'))
 
-        
+    detalleProyecto = tblProyecto.objects.filter(IDProyecto = id_Proyecto).values("ID", "IDProyecto_id__Folio", 
+    "IDFormaDePago_id__Descripcion", "IDCategoria_id__Descripcion", "Monto", "Factura", "Descripcion", "Proveedor", "Fecha")
+           
     return render(request, 'Proceso/Gastos/index.html', {"context": context, 'selectPago':selectPago, 'selectCategoria':selectCategoria, 
     'fecha_actual':fecha_formateada, 'detalleProyecto':detalleProyecto, 'montoXCategoria':montoXCategoria,'montoXPago':montoXPago,
     'proveedor':proveedor})
     
-# def datos_seleccionado_proyecto(request):
-#     #  DATOS PARA REGRESAR AL TEMPLATE DE PROYECTOS
-#     id_Proyecto = request.POST['idProyecto'] # CAMPO id
-#     cliente = request.POST['cliente'] # CAMPO cliente
-#     proyecto = request.POST['proyecto'].upper() # CAMPO proyecto
-#     folio = request.POST['folio'] # CAMPO folio
-#     descripcion = request.POST['descripcion'] # CAMPO descripcion
-    
-#     fecha_actual = datetime.now().date()
-#     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
-#     selectPago = tblFormaPago.objects.all()
-#     selectCategoria = tblCategoriaGasto.objects.all()
-#     context = {'id':id_Proyecto, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}
-#     print(context)
-#     detalleProyecto = tblProyecto.objects.filter(IDProyecto = id_Proyecto).values("ID", "IDProyecto_id__Folio", "IDFormaDePago_id__Descripcion", 
-#                                 "IDCategoria_id__Descripcion", "Monto", "Factura", "Descripcion", "Proveedor", "Fecha")
-    
-#     proveedor = tblProyecto.objects.values("Proveedor").distinct()
-
-#     montoXCategoria = tblProyecto.objects.values('IDProyecto_id', 'IDCategoria_id__Descripcion').annotate(total_monto=Sum('Monto'))
-#     montoXPago = tblProyecto.objects.values('IDProyecto_id', 'IDFormaDePago_id__Descripcion').annotate(total_monto=Sum('Monto'))

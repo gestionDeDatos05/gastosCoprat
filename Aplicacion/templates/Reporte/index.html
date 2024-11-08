@@ -1,0 +1,165 @@
+{% extends "include/header.html" %}
+{% load static %}
+
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><a href="{% url 'C_Proyecto' %}"><i
+                class="lni lni-chevron-left-circle"></i></a><strong>
+            REPORTE</strong></h3>
+    <h5><strong>Ingrese los campos que quiera buscar</strong></h5>
+    <h5 class="texto-contenedor mb-4">{{context.descripcion}}</h5>
+    <hr class="mb-4">
+    <div class="row">
+        <div class="col-12  form-alta">
+            <div class="card card-contenido-alta">
+
+                {% if messages %}
+                {% for message in messages %}
+                <div
+                    class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form action="{% url 'R_Proyecto' %}" method="POST" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-8 col-lg-11">
+                            <h4><strong>Agregar gastos del proyecto</strong></h4>
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-1">
+                            <button type="submit" class="btn btn-success w-100">BUSCAR</button>
+                        </div>
+                    </div>
+                    <hr>
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <label class="form-label"><b>PROYECTO *</b></label>
+                            <select class="select2 form-select" name="proyecto" required>
+                                {% if proyecto_reporte %}
+                                <option value="{{ proyecto_reporte.ID }}">--- {{ proyecto_reporte.Folio }} - {{
+                                    proyecto_reporte.Proyecto }} ---
+                                </option>
+                                {% endif %}
+                                <option value="todos">Todos los proyectos</option>
+                                {% for data in selectProyecto %}
+                                <option value="{{data.ID}}">{{data.Folio}} - {{data.Proyecto}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <label class="form-label"><b>CATEGORIA *</b></label>
+                            <select class="select2 form-select" name="categoria" required>
+                                {% if categoria_reporte %}
+                                <option value="{{ categoria_reporte.ID }}">--- {{ categoria_reporte.Descripcion }} ---
+                                </option>
+                                {% endif %}
+                                <option value="todos">Todas las categorias</option>
+                                {% for data in selectCategoria %}
+                                <option value="{{data.ID}}">{{data.ID}} - {{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <label class="form-label"><b>FORMA DE PAGO *</b></label>
+                            <select class="select2 form-select" name="pago" required>
+                                {% if pago_reporte %}
+                                <option value="{{ pago_reporte.ID }}">--- {{ pago_reporte.Descripcion }} ---</option>
+                                {% endif %}
+                                <option value="todos">Todas las formas de pago</option>
+                                {% for data in selectPago %}
+                                <option value="{{data.ID}}">{{data.ID}} - {{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <label class="form-label"><b>PROVEEDOR *</b></label>
+                            <select class="select2 form-select" name="proveedor" required>
+                                {% if proveedor_reporte is not none %}
+                                <option value="{{ proveedor_reporte }}">--- {{ proveedor_reporte }} ---</option>
+                                {% endif %}
+                                <option value="Todos los proveedores">Todos los proveedores</option>
+                                {% for data in proveedor %}
+                                <option value="{{data.Proveedor}}">{{data.Proveedor}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <label for="fechaFinal" class="form-label"><b>FECHA INICIAL *</b></label>
+                            {% if fechaI_reporte %}
+                            <input type="date" class="form-control" value="{{ fechaI_reporte }}" name="fechaI" required>
+                            {% else %}
+                            <input type="date" class="form-control" value="{{ fecha_actual }}" name="fechaI" required>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <label for="fechaFinal" class="form-label"><b>FECHA FINAL*</b></label>
+                            {% if fechaF_reporte %}
+                            <input type="date" class="form-control" value="{{ fechaF_reporte }}" name="fechaF" required>
+                            {% else %}
+                            <input type="date" class="form-control" value="{{ fecha_actual }}" name="fechaF" required>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 tabla-alta mt-5">
+            <div class="card card-contenido-alta">
+                <h4><strong>Ver gastos registrados de este proyecto</strong></h4>
+                <hr>
+                <div class="table-responsive" style="max-width: 7000px; overflow-y: auto;">
+                    <table class="table table-hover custom-hover">
+                        <thead>
+                            <tr>
+                                <th>FECHA</th>
+                                <th>PROYECTO</th>
+                                <th>CLIENTE</th>
+                                <th>FORMA DE PAGO</th>
+                                <th>MONTO</th>
+                                <th>FACTURA</th>
+                                <th>CATEGORIA</th>
+                                <th>PROVEEDOR</th>
+                                <th>DESCRIPCION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for datos in detalleProyecto %}
+                            <tr>
+                                <td>{{datos.0|date:"d/m/Y" }}</td>
+                                <td>{{datos.1}} - {{datos.2}}</td>
+                                <td>{{datos.9}}</td>
+                                <td>{{datos.3}}</td>
+                                <td>$ {{datos.4}}</td>
+                                <td>{{datos.5}}</td>
+                                <td>{{datos.6}}</td>
+                                <td>{{datos.8}}</td>
+                                <td>{{datos.7}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% for datos in suma_Total %}
+                            <tr>
+                                <td><b>GASTOS TOTAL:</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><b>$ {{ datos.0|default:"0" }}</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
