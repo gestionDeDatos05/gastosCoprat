@@ -29,12 +29,12 @@
                     <div class="row mb-3">
                         <div class="col-4">
                             <input type="hidden" name="id" value="{{TEProyecto.ID}}">
-                            <label for="exampleInputEmail1" class="form-label"><b>FOLIO *</b></label>
+                            <label  class="form-label"><b>FOLIO *</b></label>
                             <input type="text" class="form-control" placeholder="Ingrese el folio" name="Folio"
                                 value="{{TEProyecto.Folio}}" required autofocus>
                         </div>
                         <div class="col-8">
-                            <label for="exampleInputEmail1" class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
+                            <label  class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
                             <input type="text" class="form-control" value="{{TEProyecto.Proyecto}}"
                                 placeholder="Ingrese el nombre del proyecto" name="proyecto" required>
 
@@ -43,7 +43,7 @@
 
                     <div class="row mb-3">
                         <div style="display: none;">
-                            <label for="exampleInputEmail1" class="form-label"><b>ESTATUS *</b></label>
+                            <label  class="form-label"><b>ESTATUS *</b></label>
                             <select class="select2 form-select" aria-label="Default select example" name="estatus"
                                 required>
                                 <option value="{{FiltradoEstatus.ID}}">
@@ -55,7 +55,7 @@
                             </select>
                         </div>
                         <div class="col-12">
-                            <label for="exampleInputEmail1" class="form-label"><b>CLIENTE *</b></label>
+                            <label  class="form-label"><b>CLIENTE *</b></label>
                             <select class="select2 form-select" aria-label="Default select example" name="cliente"
                                 required>
                                 <option value="{{FiltradoCliente.ID}}">
@@ -69,12 +69,12 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <label for="exampleInputEmail1" class="form-label"><b>PRESUPUESTO *</b></label>
+                            <label  class="form-label"><b>PRESUPUESTO *</b></label>
                             <input type="number" class="form-control" placeholder="Ingrese el presupuesto"
                                 name="presupuesto" step="0.01" value="{{TEProyecto.Presupuesto}}" required>
                         </div>
                         <div class="col-8">
-                            <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                            <label  class="form-label"><b>DESCRIPCIÓN *</b></label>
                             <input type="text" class="form-control" value="{{TEProyecto.Descripcion}}"
                                 placeholder="Ingrese una breve descripción" name="descripcion" required>
                         </div>
