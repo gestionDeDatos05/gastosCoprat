@@ -44,23 +44,39 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="porcentajes"
-                                style="--porcentaje: {{proyecto.porcentaje_acumulado}}; --color: blue;">
-                                <svg width="180" height="180">
-                                    <circle class="circleGrafica" r="60" cx="50%" cy="50%" pathlength="100" />
-                                    <circle class="circleGrafica" r="60" cx="50%" cy="50%" pathlength="100" />
-                                </svg>
-                                <span id="{{ proyecto.Folio }}" class="h6-form"
-                                    data-target="{{ proyecto.porcentaje_acumulado }}">0 <label for="">%</label></span>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="porcentajes"
+                                        style="--porcentaje: {{proyecto.porcentaje_acumulado}}; --color: blue;">
+                                        <svg width="120" height="120">
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                        </svg>
+                                        <span id="{{ proyecto.Folio }}" style="font-size: 16px;"
+                                            data-target="{{ proyecto.porcentaje_acumulado }}">0 <label>%</label></span>
+                                    </div>
+                                    <h6 class="text-curso-proyecto"><strong>Dias utilizados:</strong><br>
+                                        {{proyecto.DiasRestantes}} / {{proyecto.DiasTotales}}</h6>
+                                </div>
+                                <div class="col-6">
+                                    {% for monto in montoXProyecto %}
+                                    {% if proyecto.ID == monto.IDProyecto_id %}
+                                    <div class="porcentajes"
+                                        style="--porcentaje: {{proyecto.porcentaje_gastos}}; --color: rgb(0, 160, 13);">
+                                        <svg width="120" height="120">
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                        </svg>
+                                        <span id="{{ proyecto.ID }}" style="font-size: 16px;"
+                                            data-target="{{ proyecto.porcentaje_gastos }}">0 <label>%</label></span>
+                                    </div>
+
+                                    <h6 class="text-curso-proyecto"><strong>Gasto actual:</strong><br>
+                                        $ {{monto.total_monto|floatformat:2 }} / {{ proyecto.Presupuesto}}</h6>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
-                            <h5 class="text-curso-proyecto"><strong>Dias utilizados:</strong>
-                                {{proyecto.DiasRestantes}} / {{proyecto.DiasTotales}}</h5>
-                            {% for monto in montoXProyecto %}
-                            {% if proyecto.ID == monto.IDProyecto_id %}
-                            <h5 class="text-curso-proyecto"><strong>Gasto actual:</strong>
-                                $ {{monto.total_monto|floatformat:2 }} / {{ proyecto.Presupuesto }}</h5>
-                            {% endif %}
-                            {% endfor %}
                             <hr>
                             <h5 class="text-curso-proyecto">{{proyecto.Descripcion}}</h5>
                         </div>

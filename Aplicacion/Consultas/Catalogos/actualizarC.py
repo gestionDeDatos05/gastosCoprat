@@ -60,7 +60,6 @@ def actualizarAltaProyecto(request):
     descripcion = request.POST['descripcion'] # CAMPO CLIENTE
     fechaInicio = request.POST['fechaInicio'] # CAMPO CLIENTE
     fechaFinal = request.POST['fechaFinal'] # CAMPO CLIENTE
-    presupuesto = request.POST['presupuesto'] # CAMPO CLIENTE
     
     actualizarAltaProyecto = tblAltaProyecto.objects.get(ID=id)
     estatus_instancia = tblEstatus.objects.get(ID=estatus)
@@ -69,7 +68,6 @@ def actualizarAltaProyecto(request):
     actualizarAltaProyecto.IDEstatus = estatus_instancia
     actualizarAltaProyecto.IDCliente = cliente_instancia
     actualizarAltaProyecto.Proyecto = proyecto
-    actualizarAltaProyecto.Presupuesto = presupuesto
     actualizarAltaProyecto.Descripcion = descripcion
     actualizarAltaProyecto.FechaInicio = fechaInicio
     actualizarAltaProyecto.Fechafinal = fechaFinal
@@ -77,3 +75,22 @@ def actualizarAltaProyecto(request):
     messages.success(request, f'El proyecto "{proyecto}" se ha actualizado exitosamente.')
 
     return redirect('T_Proyecto')
+
+def actualizarEstatusProyecto(request): 
+    if request.method == 'POST':
+        id = request.POST['id']
+        estatus = request.POST['estatus'] 
+        print(estatus)
+        if estatus == 'si':
+            actualizarAltaProyecto = tblAltaProyecto.objects.get(ID=id)
+            estatus_instancia = tblEstatus.objects.get(ID=1)
+            actualizarAltaProyecto.IDEstatus = estatus_instancia            
+            actualizarAltaProyecto.save()
+        elif estatus == 'no':
+            actualizarAltaProyecto = tblAltaProyecto.objects.get(ID=id)
+            estatus_instancia = tblEstatus.objects.get(ID=2)
+            actualizarAltaProyecto.IDEstatus = estatus_instancia            
+            actualizarAltaProyecto.save()
+        
+        messages.success(request, f'El proyecto se ha actualizado exitosamente.')
+        return redirect('T_Proyecto')

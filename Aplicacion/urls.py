@@ -26,6 +26,7 @@ urlpatterns = [
     path('Actualizar_Forma_de_pago/', actualizarC.actualizarFormaDePago, name='A_Forma_de_pago'),
     path('Actualizar_Categoria/', actualizarC.actualizarCategoria, name='A_Categoria'),
     path('Actualizar_Proyecto/', actualizarC.actualizarAltaProyecto, name='A_Proyecto'),
+    path('Actualizar_Estatus_Proyecto/', actualizarC.actualizarEstatusProyecto, name='AE_Proyecto'),
     
     # APARTADO PARA GUARDAR LOS  REGISTROS Y DARLOS DE ALTA
     path('Guardar_Clientes/', agregarC.guardarCliente, name='G_Clientes'),

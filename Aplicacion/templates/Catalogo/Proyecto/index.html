@@ -28,12 +28,13 @@
             <table class="tabla_id table table-hover custom-hover">
                 <thead>
                     <tr>
+                        <th style="justify-content: center; text-align: center;">Ver/Ocultar</th>
                         <th>Folio</th>
                         <th>Cliente</th>
                         <th>Proyecto</th>
                         <th>Presupuesto</th>
                         <th>Descripcion</th>
-                        <th>Estatus</th>
+                        <!-- <th>Estatus</th> -->
                         <th>F. Inicio</th>
                         <th>F. Final</th>
                         <th>Acción</th>
@@ -42,12 +43,26 @@
                 <tbody>
                     {% for datos in data %}
                     <tr>
+                        <td style="justify-content: center; text-align: center;">
+                            <form action="{% url 'AE_Proyecto' %}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+                                {% if datos.IDEstatus_id == 2 or datos.IDEstatus_id == "2" %}
+                                <input type="hidden" value="{{datos.ID}}" name="id">
+                                <input type="hidden" name="estatus" value="si">
+                                <button type="submit" class="btn btn-danger"> X</button>
+                                {% elif datos.IDEstatus_id == 1 or datos.IDEstatus_id == "1" %}
+                                <input type="hidden" value="{{datos.ID}}" name="id">
+                                <input type="hidden" name="estatus" value="no">
+                                <button type="submit" class="btn btn-primary"><i class="lni lni-eye"></i></button>
+                                {% endif %}
+                            </form>
+                        </td>
                         <td>{{datos.Folio}}</td>
                         <td>{{datos.IDCliente_id__Nombre}}</td>
                         <td>{{datos.Proyecto}}</td>
                         <td>{{datos.Presupuesto}}</td>
                         <td>{{datos.Descripcion}}</td>
-                        <td>{{datos.IDEstatus_id__Descripcion}}</td>
+                        <!-- <td>{{datos.IDEstatus_id__Descripcion}}</td> -->
                         <td>{{datos.FechaInicio|date:"d/m/Y" }}</td>
                         <td>{{datos.Fechafinal|date:"d/m/Y" }}</td>
                         <td>
@@ -108,8 +123,8 @@
                     <div class="row mb-3">
                         <div class="col-4">
                             <label for="fechaInicio" class="form-label"><b>PRESUPUESTO *</b></label>
-                            <input type="number" class="form-control" placeholder="Ingrese el presupuesto" name="presupuesto"
-                                step="0.01" required>
+                            <input type="number" class="form-control" placeholder="Ingrese el presupuesto"
+                                name="presupuesto" step="0.01" required>
                         </div>
                         <div class="col-4">
                             <label for="fechaInicio" class="form-label"><b>FECHA INICIO *</b></label>
