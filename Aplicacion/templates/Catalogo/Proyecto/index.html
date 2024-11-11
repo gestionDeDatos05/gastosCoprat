@@ -11,19 +11,69 @@
     <h3 class="titulo-contenedor"><strong>PROYECTO</strong></h3>
     <h5 class="texto-contenedor mb-4">Aqui se muestra los proyectos dados de alta</h5>
     <hr class="mb-4">
-    <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-4 form-alta">
-            <div class="card card-contenido-alta">
-                <h4><strong>Formulario para dar de alta proyectos</strong></h4>
-                <hr>
-                {% if messages %}
-                {% for message in messages %}
-                <div
-                    class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
-                    {{ message }}
-                </div>
-                {% endfor %}
-                {% endif %}
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+    <div class="card card-contenido-alta">
+        <h4><strong>Tabla para ver los proyectos registrados</strong></h4>
+        <hr>
+        <div class="table-responsive" style="max-width: 7000px; overflow-y: auto;">
+            <table class="tabla_id table table-hover custom-hover">
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>Cliente</th>
+                        <th>Proyecto</th>
+                        <th>Presupuesto</th>
+                        <th>Descripcion</th>
+                        <th>Estatus</th>
+                        <th>F. Inicio</th>
+                        <th>F. Final</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for datos in data %}
+                    <tr>
+                        <td>{{datos.Folio}}</td>
+                        <td>{{datos.IDCliente_id__Nombre}}</td>
+                        <td>{{datos.Proyecto}}</td>
+                        <td>{{datos.Presupuesto}}</td>
+                        <td>{{datos.Descripcion}}</td>
+                        <td>{{datos.IDEstatus_id__Descripcion}}</td>
+                        <td>{{datos.FechaInicio|date:"d/m/Y" }}</td>
+                        <td>{{datos.Fechafinal|date:"d/m/Y" }}</td>
+                        <td>
+                            <form action="{% url 'E_Proyecto' %}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{datos.ID}}" name="id">
+                                <button class="btn btn-success">Editar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4><strong>Agregar gastos del proyecto</strong></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <form action="{% url 'G_Proyecto' %}" method="POST" autocomplete="off">
                     {% csrf_token %}
                     <div class="row mb-3">
@@ -34,7 +84,8 @@
                         </div>
                         <div class="col-8">
                             <label for="exampleInputEmail1" class="form-label"><b>CLIENTE *</b></label>
-                            <select class="select2 form-select" aria-label="Default select example" name="cliente" required>
+                            <select class="select2 form-select" aria-label="Default select example" name="cliente"
+                                required>
                                 <option value="">Seleccione un cliente</option>
                                 {% for data in cliente %}
                                 <option value="{{data.ID}}">{{data.Nombre}}</option>
@@ -42,78 +93,45 @@
                             </select>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
-                        <input type="text" class="form-control" placeholder="Ingrese el nombre del proyecto"
-                            name="proyecto" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
-                        <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
-                            name="descripcion" required>
-                    </div>
                     <div class="row mb-3">
                         <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
+                            <input type="text" class="form-control" placeholder="Ingrese el nombre del proyecto"
+                                name="proyecto" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                            <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
+                                name="descripcion" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <label for="fechaInicio" class="form-label"><b>PRESUPUESTO *</b></label>
+                            <input type="number" class="form-control" placeholder="Ingrese el presupuesto" name="presupuesto"
+                                step="0.01" required>
+                        </div>
+                        <div class="col-4">
                             <label for="fechaInicio" class="form-label"><b>FECHA INICIO *</b></label>
                             <input type="date" class="form-control" id="fechaInicio" value="{{ fecha_actual }}"
                                 name="fechaInicio" required>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label for="fechaFinal" class="form-label"><b>FECHA FINAL *</b></label>
                             <input type="date" class="form-control" id="fechaFinal" value="{{ fecha_actual }}"
                                 name="fechaFinal" required>
                         </div>
                     </div>
+                    <hr>
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="{% url 'T_Proyecto'%}">
-                        <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
-                    </a>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </form>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-8 col-lg-8 tabla-alta">
-            <div class="card card-contenido-alta">
-                <h4><strong>Tabla para ver los proyectos registrados</strong></h4>
-                <hr>
-                <div class="table-responsive" style="max-width: 7000px; overflow-y: auto;">
-                    <table class="tabla_id table table-hover custom-hover">
-                        <thead>
-                            <tr>
-                                <th>Folio</th>
-                                <th>Cliente</th>
-                                <th>Proyecto</th>
-                                <th>Descripcion</th>
-                                <th>Estatus</th>
-                                <th>F. Inicio</th>
-                                <th>F. Final</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for datos in data %}
-                            <tr>
-                                <td>{{datos.Folio}}</td>
-                                <td>{{datos.IDCliente_id__Nombre}}</td>
-                                <td>{{datos.Proyecto}}</td>
-                                <td>{{datos.Descripcion}}</td>
-                                <td>{{datos.IDEstatus_id__Descripcion}}</td>
-                                <td>{{datos.FechaInicio|date:"d/m/Y" }}</td>
-                                <td>{{datos.Fechafinal|date:"d/m/Y" }}</td>
-                                <td>
-                                    <form action="{% url 'E_Proyecto' %}" method="POST" autocomplete="off">
-                                        {% csrf_token %}
-                                        <input type="hidden" value="{{datos.ID}}" name="id">
-                                        <button class="btn btn-success">Editar</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
 </div>
-
+<button type="button" class="BotonAgregar1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div class="sign">+</div>
+    <div class="text">AGREGAR PROYECTO</div>
+</button>
 {% endblock %}

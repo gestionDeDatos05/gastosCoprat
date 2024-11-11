@@ -10,7 +10,8 @@ from django.db.models import Sum
 def inicio(request):
     categoria = tblCategoriaGasto.objects.all()
     # Obtener la lista de proyectos con los campos deseados
-    proyectos = tblAltaProyecto.objects.filter(IDEstatus_id = 1).values("ID", "Folio", "IDEstatus_id__Descripcion", "IDCliente_id__Nombre", "Proyecto", "Descripcion", "FechaInicio", "Fechafinal")
+    proyectos = tblAltaProyecto.objects.filter(IDEstatus_id = 1).values("ID", "Folio", "IDEstatus_id__Descripcion",
+    "IDCliente_id__Nombre", "Proyecto", "Descripcion", "FechaInicio", "Fechafinal", "Presupuesto")
 
     fecha_actual = datetime.now().date()
     
@@ -39,6 +40,7 @@ def inicio(request):
             "Descripcion": proyecto['Descripcion'],
             "FechaInicio": proyecto['FechaInicio'],
             "Fechafinal": proyecto['Fechafinal'],
+            "Presupuesto": proyecto['Presupuesto'],
             "DiasTotales": dias_totales,
             "DiasRestantes": dias_restantes,
             "porcentaje_acumulado": procentaje,

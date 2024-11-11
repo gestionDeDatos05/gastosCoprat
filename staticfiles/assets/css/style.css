@@ -180,7 +180,8 @@ a.sidebar-link:hover {
 }
 
 .card-contenedor-2:hover {
-    transform: scale(1.2); /* Aumenta el tamaño a 120% */
+    transform: scale(1.05);
+    /* Aumenta el tamaño a 120% */
 }
 
 .text-curso-proyecto {
@@ -382,9 +383,24 @@ a.sidebar-link:hover {
     color: #000000;
 }
 
+/* Asegura que el contenedor general de select2 esté encima del modal */
+.select2-container {
+    z-index: 1055;
+    width: 100% !important;
+    /* Fuerza el ancho completo */
+
+    /* Un valor mayor que el modal (1050 en Bootstrap) */
+}
+
+/* Asegura que el menú desplegable de select2 esté encima del modal */
+.select2-dropdown {
+    z-index: 1060;
+    /* Un valor superior al de .select2-container */
+}
+
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background-color: #FFF;
-    color: rgb(0, 0, 0)
+    color: rgb(0, 0, 0);
 }
 
 .select2-container--default .select2-selection--single {
@@ -395,11 +411,11 @@ a.sidebar-link:hover {
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #050505;
-    line-height: 28px
+    line-height: 28px;
 }
 
 .select2-container--default .select2-results__option[aria-selected=true] {
-    background-color: #FFF
+    background-color: #FFF;
 }
 
 .select2-container--default .select2-results__option[aria-disabled=true] {
@@ -443,4 +459,84 @@ a.sidebar-link:hover {
     padding: 0;
     margin: 0;
 
+}
+
+
+/* ESTILOS PARA LOS BOTONES */
+/* From Uiverse.io by Yaya12085 */
+.BotonAgregar1 {
+    position: fixed;
+    /* Fija el botón en la pantalla */
+    right: 40px !important;
+    /* Coloca el botón a 40px del borde derecho */
+    bottom: 30px !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 120px;
+    height: 120px;
+    border-radius: calc(120px/2);
+    border: none;
+    cursor: pointer;
+    /* position: relative; */
+    overflow: hidden;
+    transition-duration: 1.6s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background: linear-gradient(144deg, #407cff, #427af3 50%, #00ddeb);
+}
+
+/* plus sign */
+.sign {
+    width: 100%;
+    font-size: 2.8em;
+    color: white;
+    transition-duration: 1.6s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* text */
+.text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    transition-duration: 1.6s;
+}
+
+/* hover effect on button width */
+.BotonAgregar1:hover {
+    width: 230px;
+    transition-duration: 1.6s;
+}
+
+.BotonAgregar1:hover .sign {
+    width: 50%;
+    transition-duration: 1.6s;
+    padding-left: 0px;
+}
+
+/* hover effect button's text */
+.BotonAgregar1:hover .text {
+    opacity: 1;
+    width: 70%;
+    transition-duration: 1.6s;
+    padding-right: 15px;
+}
+
+/* button click effect*/
+.BotonAgregar1:active {
+    transform: translate(2px, 2px);
+}
+
+.BotonBuscar1 {
+    position: fixed;
+    /* Fija el botón en la pantalla */
+    right: 40px !important;
+    /* Coloca el botón a 40px del borde derecho */
+    bottom: 30px !important;
 }

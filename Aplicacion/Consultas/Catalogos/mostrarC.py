@@ -22,5 +22,5 @@ def tablaProyecto(request):
     cliente = tblCliente.objects.all()
     fecha_actual = datetime.now().date()
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
-    data = tblAltaProyecto.objects.all().values("ID", "Folio", "IDEstatus_id__Descripcion","IDCliente_id", "IDCliente_id__Nombre", "Proyecto", "Descripcion", "FechaInicio", "Fechafinal")
+    data = tblAltaProyecto.objects.all().values("ID", "Folio", "IDEstatus_id__Descripcion","IDCliente_id", "IDCliente_id__Nombre", "Proyecto", "Descripcion", "FechaInicio", "Fechafinal", "Presupuesto")
     return render(request, 'Catalogo/Proyecto/index.html', {"data": data, 'cliente':cliente, 'fecha_actual':fecha_formateada})

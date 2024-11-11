@@ -17,7 +17,7 @@ def editarProyecto(request):
     id_Proyecto = request.POST['idProyecto'] # CAMPO id
     cliente = request.POST['cliente'] # CAMPO cliente
     proyecto = request.POST['proyecto'].upper() # CAMPO proyecto
-    folio = request.POST['folio'] # CAMPO folio
+    folio = request.POST['folio'].upper() # CAMPO folio
     descripcion = request.POST['descripcionProyecto'] # CAMPO descripcion
     
     context = {'id':id_Proyecto, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}   
@@ -28,7 +28,7 @@ def cancelarEditadoProyecto(request):
     id = request.POST['id'] # CAMPO id
     cliente = request.POST['cliente'] # CAMPO cliente
     proyecto = request.POST['proyecto'].upper() # CAMPO proyecto
-    folio = request.POST['folio'] # CAMPO folio
+    folio = request.POST['folio'].upper() # CAMPO folio
     descripcion = request.POST['descripcion'] # CAMPO descripcion
     
     fecha_actual = datetime.now().date()

@@ -34,8 +34,30 @@
                                 value="{{TEProyecto.Folio}}" required autofocus>
                         </div>
                         <div class="col-8">
+                            <label for="exampleInputEmail1" class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
+                            <input type="text" class="form-control" value="{{TEProyecto.Proyecto}}"
+                                placeholder="Ingrese el nombre del proyecto" name="proyecto" required>
+
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <label for="exampleInputEmail1" class="form-label"><b>ESTATUS *</b></label>
+                            <select class="select2 form-select" aria-label="Default select example" name="estatus"
+                                required>
+                                <option value="{{FiltradoEstatus.ID}}">
+                                    ---{{FiltradoEstatus.Descripcion}}---
+                                </option>
+                                {% for data in FEEstatus %}
+                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-8">
                             <label for="exampleInputEmail1" class="form-label"><b>CLIENTE *</b></label>
-                            <select class="select2 form-select" aria-label="Default select example" name="cliente" required>
+                            <select class="select2 form-select" aria-label="Default select example" name="cliente"
+                                required>
                                 <option value="{{FiltradoCliente.ID}}">
                                     --------{{FiltradoCliente.Nombre}}--------
                                 </option>
@@ -45,29 +67,17 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="row mb-3">
-                        <div class="col-7">
-                            <label for="exampleInputEmail1" class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
-                            <input type="text" class="form-control" value="{{TEProyecto.Proyecto}}"
-                                placeholder="Ingrese el nombre del proyecto" name="proyecto" required>
+                        <div class="col-4">
+                            <label for="exampleInputEmail1" class="form-label"><b>PRESUPUESTO *</b></label>
+                            <input type="number" class="form-control" placeholder="Ingrese el presupuesto"
+                                name="presupuesto" step="0.01" value="{{TEProyecto.Presupuesto}}" required>
                         </div>
-                        <div class="col-5">
-                            <label for="exampleInputEmail1" class="form-label"><b>ESTATUS *</b></label>
-                            <select class="select2 form-select" aria-label="Default select example" name="estatus" required>
-                                <option value="{{FiltradoEstatus.ID}}">
-                                    --------{{FiltradoEstatus.Descripcion}}--------
-                                </option>
-                                {% for data in FEEstatus %}
-                                <option value="{{data.ID}}">{{data.Descripcion}}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="col-8">
+                            <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                            <input type="text" class="form-control" value="{{TEProyecto.Descripcion}}"
+                                placeholder="Ingrese una breve descripción" name="descripcion" required>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
-                        <input type="text" class="form-control" value="{{TEProyecto.Descripcion}}"
-                            placeholder="Ingrese una breve descripción" name="descripcion" required>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">

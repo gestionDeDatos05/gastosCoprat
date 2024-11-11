@@ -24,6 +24,7 @@ def reportesProyecto(request):
         categoria_v = request.POST.get('categoria')
         pago_v = request.POST.get('pago')
         proveedor_v = request.POST.get('proveedor')
+        factura_v = request.POST.get('factura')
         fechaI_v = request.POST.get('fechaI')
         fechaF_v = request.POST.get('fechaF')
         
@@ -46,6 +47,12 @@ def reportesProyecto(request):
         if pago_v != "todos":
             conditions.append("Aplicacion_tblProyecto.IDFormaDePago_id = %s")
             params.append(pago_v)
+
+        if factura_v == "Con factura":
+            conditions.append("Aplicacion_tblProyecto.Factura != 'SF'")
+
+        elif factura_v == "Sin factura":
+            conditions.append("Aplicacion_tblProyecto.Factura = 'SF'")
 
         if proveedor_v != "Todos los proveedores":
             conditions.append("Aplicacion_tblProyecto.Proveedor = %s")
@@ -83,6 +90,7 @@ def reportesProyecto(request):
             'proyecto_reporte': proyecto_reporte,
             'categoria_reporte': categoria_reporte,
             'pago_reporte': pago_reporte,
+            'factura_reporte': factura_v,
             'proveedor_reporte': proveedor_v,
             'fechaI_reporte': fechaI_v,
             'fechaF_reporte': fechaF_v,

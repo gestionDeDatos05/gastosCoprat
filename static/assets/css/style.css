@@ -41,11 +41,12 @@ body {
 #sidebar {
     width: 70px;
     min-width: 70px;
-    z-index: 1000;
+    
     transition: all .25s ease-in-out;
     background-color: #0e2238;
     display: flex;
     flex-direction: column;
+    z-index: 1060;
 }
 
 #sidebar.expand {
@@ -531,4 +532,14 @@ a.sidebar-link:hover {
 /* button click effect*/
 .BotonAgregar1:active {
     transform: translate(2px, 2px);
+}
+
+.BotonBuscar1 {
+    position: fixed;
+    width: 15%;
+    z-index: 1060;
+    /* Fija el botón en la pantalla */
+    right: 74px !important;
+    /* Coloca el botón a 40px del borde derecho */
+    top: 58px !important;
 }

@@ -8,10 +8,10 @@ def actualizarProyecto(request):
     id = request.POST['id'] # CAMPO id
     categoria = request.POST['categoria'].upper() # CAMPO Folio
     pago = request.POST['pago'] # CAMPO cliente
-    factura = request.POST['factura'] # CAMPO estatus
+    factura = request.POST['factura'].upper() # CAMPO estatus
     monto = request.POST['monto'].upper() # CAMPO proyecto
     descripcion = request.POST['descripcion'] # CAMPO descripcion
-    proveedor = request.POST['proveedor'] # CAMPO fechaInicio
+    proveedor = request.POST['proveedor'].upper() # CAMPO fechaInicio
     fecha = request.POST['fecha'] # CAMPO fechaFinal
     
     actualizarDetalleProyecto = tblProyecto.objects.get(ID=id)
@@ -32,7 +32,7 @@ def actualizarProyecto(request):
     id_Proyecto = request.POST['idProyecto'] # CAMPO id
     cliente = request.POST['cliente'] # CAMPO cliente
     proyecto = request.POST['proyecto'].upper() # CAMPO proyecto
-    folio = request.POST['folio'] # CAMPO folio
+    folio = request.POST['folio'].upper() # CAMPO folio
     descripcion = request.POST['descripcion'] # CAMPO descripcion
 
     fecha_actual = datetime.now().date()

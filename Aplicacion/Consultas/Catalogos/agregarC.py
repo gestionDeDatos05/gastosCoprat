@@ -44,6 +44,7 @@ def guardarProyecto(request):
     Folio = request.POST['Folio'].upper() # CAMPO CLIENTE
     cliente = request.POST['cliente'] # CAMPO CLIENTE
     proyecto = request.POST['proyecto'].upper() # CAMPO CLIENTE
+    presupuesto = request.POST['presupuesto'] # CAMPO CLIENTE
     descripcion = request.POST['descripcion'] # CAMPO CLIENTE
     fechaInicio = request.POST['fechaInicio'] # CAMPO CLIENTE
     fechaFinal = request.POST['fechaFinal'] # CAMPO CLIENTE
@@ -51,6 +52,6 @@ def guardarProyecto(request):
     
     
     tblAltaProyecto.objects.create( Folio = Folio, IDEstatus_id = EstatusDefault, IDCliente_id = cliente, Proyecto = proyecto, 
-    Descripcion = descripcion, FechaInicio = fechaInicio, Fechafinal = fechaFinal )
+    Descripcion = descripcion, FechaInicio = fechaInicio, Fechafinal = fechaFinal, Presupuesto =  presupuesto)
     messages.success(request, f'El proyecto {proyecto} se ha registrado exitosamente')
     return redirect('T_Proyecto')
