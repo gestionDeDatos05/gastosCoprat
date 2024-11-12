@@ -1,6 +1,6 @@
 {% extends "include/header.html" %}
 {% load static %}
-
+{% load humanize %}
 {% block title %}GASTOS POR PROYECTO{% endblock %}
 
 {% block body %}
@@ -39,7 +39,7 @@
                     {% for datos in detalleProyecto %}
                     <tr>
                         <td>{{datos.Fecha|date:"d/m/Y" }}</td>
-                        <td>$ {{datos.Monto}}</td>
+                        <td>${{datos.Monto|floatformat:2|intcomma }}</td>
                         <td>{{datos.IDFormaDePago_id__Descripcion}}</td>
                         <td>{{datos.Factura}}</td>
                         <td>{{datos.IDCategoria_id__Descripcion}}</td>
@@ -76,7 +76,7 @@
                     <h5 class="card-title-contenedor-1"><strong>{{ datos.IDCategoria_id__Descripcion }}</strong></h5>
                     <hr>
                     <p class="card-text-contenedor-1" id="{{datos.IDProyecto_id}}" data-end-value="">
-                        $ {{ datos.total_monto }}</p>
+                        ${{ datos.total_monto|floatformat:2|intcomma }}</p>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                     <h5 class="card-title-contenedor-1"><strong>{{ datos.IDFormaDePago_id__Descripcion }}</strong></h5>
                     <hr>
                     <p class="card-text-contenedor-1" id="{{datos.IDProyecto_id}}" data-end-value="">
-                        $ {{ datos.total_monto }}</p>
+                        ${{ datos.total_monto|floatformat:2|intcomma }}</p>
                 </div>
             </div>
         </div>
