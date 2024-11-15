@@ -53,6 +53,7 @@ urlpatterns = [
     path('Editar_Detallado_De_Gastos_Por_Proyecto/', editarP.editarProyecto, name='ED_Proyecto'),
     # VISTA PARA EDITAR LOS REGISTROS DADOS DE ALTA
     path('Cancelar_Detallado_De_Gastos_Por_Proyecto/', editarP.cancelarEditadoProyecto, name='CD_Proyecto'),
+    path('Cancelar_Detallado_De_Gastos_Por_Mensualidad/', editarP.cancelarEditadoMensuales, name='CD_Mensuales'),
     # VISTA PARA ACTUALIZAR LOS REGISTROS DADOS DE ALTA
     path('Actualizar_Detallado_De_Gastos_Por_Proyecto/', actualizarP.actualizarProyecto, name='AD_Proyecto'),
     # GUARDAR DETALLADO DE GASTOS POR PROYECTOS

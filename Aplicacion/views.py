@@ -71,7 +71,7 @@ def inicio(request):
     selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = 1)
     selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = 1)
     selectProyecto = tblAltaProyecto.objects.filter(IDEstatus_id = 1, IDAreaTrabajo = 1)
-    proveedor = tblProyecto.objects.values("Proveedor").distinct()    
+    proveedor = tblProyecto.objects.filter(IDAreaTrabajo = 1).values("Proveedor").distinct()    
     return render(request, 'include/index.html', {'categoria': categoria, 'proyectos': proyectos_con_dias, 'montoXProyecto':montoXProyecto,
     'selectPago':selectPago, 'selectCategoria':selectCategoria, 'fecha_actual':fecha_formateada, 'selectProyecto':selectProyecto, 'proveedor':proveedor})
 
@@ -86,7 +86,7 @@ def mensual(request):
     
     proyectos_con_dias = []  # Lista para almacenar los proyectos con días calculados
 
-    montoXProyecto = tblProyecto.objects.values('IDProyecto_id').annotate(total_monto=Sum('Monto'))
+    montoXProyecto = tblProyecto.objects.filter(IDAreaTrabajo = 2).values('IDProyecto_id').annotate(total_monto=Sum('Monto'))
     
     for proyecto in proyectos:
         ID_proyecto = proyecto['ID']
@@ -140,7 +140,7 @@ def mensual(request):
     selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = 2)
     selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = 2)
     selectProyecto = tblAltaProyecto.objects.filter(IDEstatus_id = 1, IDAreaTrabajo = 2)
-    proveedor = tblProyecto.objects.values("Proveedor").distinct()    
+    proveedor = tblProyecto.objects.filter(IDAreaTrabajo = 2).values("Proveedor").distinct()    
     return render(request, 'include/gastos.html', {'categoria': categoria, 'proyectos': proyectos_con_dias, 'montoXProyecto':montoXProyecto,
     'selectPago':selectPago, 'selectCategoria':selectCategoria, 'fecha_actual':fecha_formateada, 'selectProyecto':selectProyecto, 'proveedor':proveedor})
 

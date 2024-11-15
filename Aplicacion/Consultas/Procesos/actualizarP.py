@@ -25,6 +25,7 @@ def actualizarProyecto(request):
     actualizarDetalleProyecto.Proveedor = proveedor
     actualizarDetalleProyecto.Descripcion = descripcion
     actualizarDetalleProyecto.Fecha = fecha
+    areaTrabajo = actualizarDetalleProyecto.IDAreaTrabajo.ID
     actualizarDetalleProyecto.save()
     messages.success(request, f'El proyecto con el folio "{factura}" se ha actualizado exitosamente.')
 
@@ -37,8 +38,8 @@ def actualizarProyecto(request):
 
     fecha_actual = datetime.now().date()
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
-    selectPago = tblFormaPago.objects.all()
-    selectCategoria = tblCategoriaGasto.objects.all()
+    selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = areaTrabajo)
+    selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = areaTrabajo)
     
     context = {'id':id_Proyecto, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}
     proveedor = tblProyecto.objects.values("Proveedor").distinct()
@@ -48,8 +49,23 @@ def actualizarProyecto(request):
 
     detalleProyecto = tblProyecto.objects.filter(IDProyecto = id_Proyecto).values("ID", "IDProyecto_id__Folio", 
     "IDFormaDePago_id__Descripcion", "IDCategoria_id__Descripcion", "Monto", "Factura", "Descripcion", "Proveedor", "Fecha")
-           
-    return render(request, 'Proceso/Gastos/index.html', {"context": context, 'selectPago':selectPago, 'selectCategoria':selectCategoria, 
-    'fecha_actual':fecha_formateada, 'detalleProyecto':detalleProyecto, 'montoXCategoria':montoXCategoria,'montoXPago':montoXPago,
-    'proveedor':proveedor})
-    
+    print(type(areaTrabajo))
+
+    # Determinar la plantilla según el área de trabajo
+    if areaTrabajo == 1:
+        template = 'Proceso/Gastos/index.html'
+    elif areaTrabajo == 2:
+        template = 'Proceso/Gastos/gastos.html'
+   
+    # Renderizar la plantilla seleccionada con los parámetros comunes
+    return render(request, template, {
+        "context": context,
+        'selectPago': selectPago,
+        'selectCategoria': selectCategoria,
+        'fecha_actual': fecha_formateada,
+        'detalleProyecto': detalleProyecto,
+        'montoXCategoria': montoXCategoria,
+        'montoXPago': montoXPago,
+        'proveedor': proveedor
+    })
+        

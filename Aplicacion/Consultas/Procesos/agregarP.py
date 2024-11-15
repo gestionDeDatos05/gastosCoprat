@@ -23,12 +23,13 @@ def guardarDetalleProyecto(request):
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
     selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = areaTrabajo)
     selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = areaTrabajo)
-    proveedorSearch = tblProyecto.objects.values("Proveedor").distinct()
+    proveedorSearch = tblProyecto.objects.filter(IDAreaTrabajo = 1).values("Proveedor").distinct()
     nombreProyect = tblAltaProyecto.objects.get(ID  = idProyecto)
     FProyecto = nombreProyect.Folio
     NProyecto = nombreProyect.Proyecto
+    
     tblProyecto.objects.create(IDProyecto_id = idProyecto, IDFormaDePago_id = pago, IDCategoria_id = categoria, 
-    Monto = monto, Factura = factura, Descripcion = descripcion, Proveedor = proveedor, Fecha = fecha, IDAreaTrabajo = areaTrabajo)
+    Monto = monto, Factura = factura, Descripcion = descripcion, Proveedor = proveedor, Fecha = fecha, IDAreaTrabajo_id = areaTrabajo)
     messages.success(request, f'Se ha registrado el monto $ {monto}, en el proyecto {FProyecto} - {NProyecto} exitosamente ')
     
     if request.method == 'POST':

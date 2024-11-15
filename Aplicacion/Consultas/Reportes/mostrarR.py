@@ -15,7 +15,7 @@ def reportesProyecto(request):
     selectProyecto = tblAltaProyecto.objects.filter(IDEstatus_id = 1, IDAreaTrabajo = 1)
     selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = 1)
     selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = 1)   
-    proveedor = tblProyecto.objects.values("Proveedor").distinct()    
+    proveedor = tblProyecto.objects.filter(IDAreaTrabajo = 1).values("Proveedor").distinct()    
     
     detalleProyecto = [] 
 
@@ -115,7 +115,7 @@ def reportesMensuales(request):
     selectProyecto = tblAltaProyecto.objects.filter(IDEstatus_id = 1, IDAreaTrabajo = 2)
     selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = 2)
     selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = 2)   
-    proveedor = tblProyecto.objects.values("Proveedor").distinct()    
+    proveedor = tblProyecto.objects.filter(IDAreaTrabajo = 2).values("Proveedor").distinct()    
     
     detalleProyecto = [] 
 

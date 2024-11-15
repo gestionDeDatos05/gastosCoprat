@@ -19,7 +19,7 @@ def detalleProyecto(request):
     selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = 1)
     context = {'id':id, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}
     
-    proveedor = tblProyecto.objects.values("Proveedor").distinct()    
+    proveedor = tblProyecto.objects.filter(IDAreaTrabajo = 1).values("Proveedor").distinct()    
     detalleProyecto = tblProyecto.objects.filter(IDProyecto = id).values("ID", "IDProyecto_id__Folio", "Proveedor",
     "IDFormaDePago_id__Descripcion", "IDCategoria_id__Descripcion", "Monto", "Factura", "Descripcion", "Fecha")    
     montoXCategoria = tblProyecto.objects.values('IDProyecto_id', 'IDCategoria_id__Descripcion').annotate(total_monto=Sum('Monto'))
@@ -43,7 +43,7 @@ def detalleGastos(request):
     selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = 2)
     context = {'id':id, 'cliente': cliente, 'folio': folio, 'proyecto': proyecto, 'descripcion':descripcion}
     
-    proveedor = tblProyecto.objects.values("Proveedor").distinct()    
+    proveedor = tblProyecto.objects.filter(IDAreaTrabajo = 2).values("Proveedor").distinct()    
     detalleProyecto = tblProyecto.objects.filter(IDProyecto = id).values("ID", "IDProyecto_id__Folio", "Proveedor",
     "IDFormaDePago_id__Descripcion", "IDCategoria_id__Descripcion", "Monto", "Factura", "Descripcion", "Fecha")    
     montoXCategoria = tblProyecto.objects.values('IDProyecto_id', 'IDCategoria_id__Descripcion').annotate(total_monto=Sum('Monto'))
