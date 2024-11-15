@@ -70,4 +70,5 @@ urlpatterns = [
     
     # REPORTE GASTOS POR PROYECTOS
     path('Reporte_gastos_proyecto/', mostrarR.reportesProyecto, name='R_Proyecto'),
+    path('Reporte_gastos_mensuales/', mostrarR.reportesMensuales, name='R_Mensuales'),
 ]
