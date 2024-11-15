@@ -44,6 +44,7 @@ class tblAltaProyecto(models.Model):
 # PROYECTO
 class tblProyecto(models.Model):
     ID = models.AutoField(primary_key=True)
+    IDAreaTrabajo = models.ForeignKey(tblAreaDeTrabajo, on_delete=models.DO_NOTHING, null=True)
     IDProyecto = models.ForeignKey(tblAltaProyecto, on_delete=models.DO_NOTHING, null=True)
     IDFormaDePago = models.ForeignKey(tblFormaPago, on_delete=models.DO_NOTHING, null=True)
     IDCategoria = models.ForeignKey(tblCategoriaGasto, on_delete=models.DO_NOTHING, null=True)

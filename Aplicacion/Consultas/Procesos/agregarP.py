@@ -28,7 +28,7 @@ def guardarDetalleProyecto(request):
     FProyecto = nombreProyect.Folio
     NProyecto = nombreProyect.Proyecto
     tblProyecto.objects.create(IDProyecto_id = idProyecto, IDFormaDePago_id = pago, IDCategoria_id = categoria, 
-    Monto = monto, Factura = factura, Descripcion = descripcion, Proveedor = proveedor, Fecha = fecha)
+    Monto = monto, Factura = factura, Descripcion = descripcion, Proveedor = proveedor, Fecha = fecha, IDAreaTrabajo = areaTrabajo)
     messages.success(request, f'Se ha registrado el monto $ {monto}, en el proyecto {FProyecto} - {NProyecto} exitosamente ')
     
     if request.method == 'POST':
