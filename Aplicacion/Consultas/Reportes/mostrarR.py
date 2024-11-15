@@ -13,8 +13,8 @@ def reportesProyecto(request):
     fecha_actual = datetime.now().date()
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
     selectProyecto = tblAltaProyecto.objects.filter(IDEstatus_id = 1)
-    selectPago = tblFormaPago.objects.all()
-    selectCategoria = tblCategoriaGasto.objects.all()   
+    selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = 1)
+    selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = 1)   
     proveedor = tblProyecto.objects.values("Proveedor").distinct()    
     
     detalleProyecto = [] 

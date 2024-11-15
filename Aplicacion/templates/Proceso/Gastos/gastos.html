@@ -5,7 +5,7 @@
 
 {% block body %}
 <div class="contenedor-tabla-alta">
-    <h3 class="titulo-contenedor"><a href="{% url 'T_Inicio' %}"><i class="lni lni-chevron-left-circle"></i></a><strong>
+    <h3 class="titulo-contenedor"><a href="{% url 'Mensual' %}"><i class="lni lni-chevron-left-circle"></i></a><strong>
             {{context.folio}} - {{context.proyecto}}</strong></h3>
     <h5><strong>{{context.cliente}}</strong></h5>
     <h5 class="texto-contenedor mb-4">{{context.descripcion}}</h5>
@@ -118,7 +118,7 @@
                     <input type="hidden" value="{{context.cliente}}" name="cliente">
                     <input type="hidden" value="{{context.proyecto}}" name="proyecto">
                     <input type="hidden" value="{{context.descripcion}}" name="descripcionProyecto">
-                    <input type="hidden" name="areaTrabajo" value="1">
+                    <input type="hidden" name="areaTrabajo" value="2">
                     {% csrf_token %}
                     <div class="row mb-3">
                         <div class="col-6">

@@ -6,16 +6,32 @@ from django.db import models
 class tblEstatus(models.Model):
     ID = models.AutoField(primary_key=True)
     Descripcion = models.CharField(max_length=30, null=True)
+
+class tblAreaDeTrabajo(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Descripcion = models.CharField(max_length=30, null=True)
     
 # CATALOGOS
 class tblCliente(models.Model):
     ID = models.AutoField(primary_key=True)
     Nombre = models.CharField(max_length=50, null=True)
+    IDAreaTrabajo = models.ForeignKey(tblAreaDeTrabajo, on_delete=models.DO_NOTHING, null=True)
     
+class tblFormaPago(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Descripcion = models.CharField(max_length=30, null=True)
+    IDAreaTrabajo = models.ForeignKey(tblAreaDeTrabajo, on_delete=models.DO_NOTHING, null=True)
+
+class tblCategoriaGasto(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Descripcion = models.CharField(max_length = 30, null=True)  
+    IDAreaTrabajo = models.ForeignKey(tblAreaDeTrabajo, on_delete=models.DO_NOTHING, null=True)
+      
 class tblAltaProyecto(models.Model):
     ID = models.AutoField(primary_key=True)
     Folio = models.CharField(max_length=30, null=True)
     IDEstatus = models.ForeignKey(tblEstatus, on_delete=models.DO_NOTHING, null=True)
+    IDAreaTrabajo = models.ForeignKey(tblAreaDeTrabajo, on_delete=models.DO_NOTHING, null=True)
     IDCliente = models.ForeignKey(tblCliente, on_delete=models.DO_NOTHING, null=True)
     Proyecto = models.CharField(max_length=60, null=True)
     Presupuesto = models.FloatField(null=True)
@@ -23,13 +39,7 @@ class tblAltaProyecto(models.Model):
     FechaInicio = models.DateField(null=True)
     Fechafinal = models.DateField(null=True)
     
-class tblFormaPago(models.Model):
-    ID = models.AutoField(primary_key=True)
-    Descripcion = models.CharField(max_length=30, null=True)
 
-class tblCategoriaGasto(models.Model):
-    ID = models.AutoField(primary_key=True)
-    Descripcion = models.CharField(max_length = 30, null=True)
     
 # PROYECTO
 class tblProyecto(models.Model):

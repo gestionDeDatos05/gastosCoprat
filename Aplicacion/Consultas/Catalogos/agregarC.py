@@ -9,49 +9,82 @@ from datetime import datetime
 
 def guardarCliente(request):
     nombre = request.POST['nombre'].upper() # CAMPO CLIENTE
-    nombre_Existe = tblCliente.objects.filter(Nombre=nombre).exists() # VALIDAR SI EL CLIENTE NO SE REGISTRO ANTERIORMENTE
+    areaTrabajo = request.POST['areaTrabajo']
+    nombre_Existe = tblCliente.objects.filter(Nombre=nombre, IDAreaTrabajo = areaTrabajo).exists() # VALIDAR SI EL CLIENTE NO SE REGISTRO ANTERIORMENTE
     if nombre_Existe:
-        messages.error(request, f'El cliente "{nombre}" ya ha sido registrado antreriormente')        
-        return redirect('T_Clientes')
+        messages.error(request, f'El cliente "{nombre}" ya ha sido registrado antreriormente') 
+        if request.method == 'POST':
+            if 'proyecto' in request.POST:
+                return redirect('T_Clientes')
+            elif 'mensuales' in request.POST:
+                return redirect('TM_Clientes')
     else:
-        tblCliente.objects.create(Nombre = nombre)
+        tblCliente.objects.create(Nombre = nombre, IDAreaTrabajo_id = areaTrabajo)
         messages.success(request, f'El cliente {nombre} se ha registrado exitosamente')
-        return redirect('T_Clientes')
+        if request.method == 'POST':
+            if 'proyecto' in request.POST:
+                return redirect('T_Clientes')
+            elif 'mensuales' in request.POST:
+                return redirect('TM_Clientes')
     
 def guardarFormaDePago(request):
     descripcion = request.POST['descripcion'].upper() # CAMPO DESCRIPCION
-    nombre_Existe = tblFormaPago.objects.filter(Descripcion=descripcion).exists() # VALIDAR SI EL CLIENTE NO SE REGISTRO ANTERIORMENTE
+    areaTrabajo = request.POST['areaTrabajo']    
+    nombre_Existe = tblFormaPago.objects.filter(Descripcion=descripcion, IDAreaTrabajo = areaTrabajo).exists() # VALIDAR SI EL CLIENTE NO SE REGISTRO ANTERIORMENTE
     if nombre_Existe:
         messages.error(request, f'El metodo de pago "{descripcion}" ya ha sido registrado antreriormente')        
-        return redirect('T_Forma_de_pago')
+        if request.method == 'POST':
+            if 'proyecto' in request.POST:
+                return redirect('T_Forma_de_pago')
+            elif 'mensuales' in request.POST:
+                return redirect('TM_Forma_de_pago')        
     else:
-        tblFormaPago.objects.create(Descripcion = descripcion)
+        tblFormaPago.objects.create(Descripcion = descripcion, IDAreaTrabajo_id = areaTrabajo)
         messages.success(request, f'El metodo de pago {descripcion} se ha registrado exitosamente')
-        return redirect('T_Forma_de_pago')
+        if request.method == 'POST':
+            if 'proyecto' in request.POST:
+                return redirect('T_Forma_de_pago')
+            elif 'mensuales' in request.POST:
+                return redirect('TM_Forma_de_pago')        
 
 def guardarCategoria(request):
     descripcion = request.POST['descripcion'].upper() # CAMPO DESCRIPCION
+    areaTrabajo = request.POST['areaTrabajo']    
     nombre_Existe = tblCategoriaGasto.objects.filter(Descripcion=descripcion).exists() # VALIDAR SI EL CLIENTE NO SE REGISTRO ANTERIORMENTE
     if nombre_Existe:
         messages.error(request, f'La categoria "{descripcion}" ya ha sido registrado antreriormente')        
-        return redirect('T_Categoria')
+        if request.method == 'POST':
+            if 'proyecto' in request.POST:
+                return redirect('T_Categoria')
+            elif 'mensuales' in request.POST:
+                return redirect('TM_Categoria')         
     else:
-        tblCategoriaGasto.objects.create(Descripcion = descripcion)
+        tblCategoriaGasto.objects.create(Descripcion = descripcion, IDAreaTrabajo_id = areaTrabajo)
         messages.success(request, f'La categoria {descripcion} se ha registrado exitosamente')
-        return redirect('T_Categoria')
+        if request.method == 'POST':
+            if 'proyecto' in request.POST:
+                return redirect('T_Categoria')
+            elif 'mensuales' in request.POST:
+                return redirect('TM_Categoria')         
 
 def guardarProyecto(request):
     Folio = request.POST['Folio'].upper() # CAMPO CLIENTE
     cliente = request.POST['cliente'] # CAMPO CLIENTE
-    proyecto = request.POST['proyecto'].upper() # CAMPO CLIENTE
+    proyectos = request.POST['proyectos'].upper() # CAMPO CLIENTE
     presupuesto = request.POST['presupuesto'] # CAMPO CLIENTE
     descripcion = request.POST['descripcion'] # CAMPO CLIENTE
     fechaInicio = request.POST['fechaInicio'] # CAMPO CLIENTE
     fechaFinal = request.POST['fechaFinal'] # CAMPO CLIENTE
     EstatusDefault = 1
+    areaTrabajo = request.POST['areaTrabajo']    
     
+    print(proyectos)
     
-    tblAltaProyecto.objects.create( Folio = Folio, IDEstatus_id = EstatusDefault, IDCliente_id = cliente, Proyecto = proyecto, 
-    Descripcion = descripcion, FechaInicio = fechaInicio, Fechafinal = fechaFinal, Presupuesto =  presupuesto)
-    messages.success(request, f'El proyecto {proyecto} se ha registrado exitosamente')
-    return redirect('T_Proyecto')
+    tblAltaProyecto.objects.create( Folio = Folio, IDEstatus_id = EstatusDefault, IDCliente_id = cliente, Proyecto = proyectos, 
+    Descripcion = descripcion, FechaInicio = fechaInicio, Fechafinal = fechaFinal, Presupuesto =  presupuesto, IDAreaTrabajo_id = areaTrabajo)
+    messages.success(request, f'El proyecto {proyectos} se ha registrado exitosamente')
+    if request.method == 'POST':
+        if 'proyecto' in request.POST:
+            return redirect('T_Proyecto')
+        elif 'mensuales' in request.POST:
+            return redirect('T_Mensual')        

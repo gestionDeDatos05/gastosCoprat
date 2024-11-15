@@ -8,7 +8,7 @@
 
 </style>
 <div class="contenedor-tabla-alta">
-    <h3 class="titulo-contenedor"><strong>PROYECTO</strong></h3>
+    <h3 class="titulo-contenedor"><strong>GASTOS MENSUALES</strong></h3>
     <h5 class="texto-contenedor mb-4">Aqui se muestra los proyectos dados de alta</h5>
     <hr class="mb-4">
 
@@ -79,7 +79,8 @@
         </div>
     </div>
 </div>
-
+</div>
+</div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -90,10 +91,10 @@
             <div class="modal-body">
                 <form action="{% url 'G_Proyecto' %}" method="POST" autocomplete="off">
                     {% csrf_token %}
-                    <input type="hidden" name="areaTrabajo" value="1">
+                    <input type="hidden" name="areaTrabajo" value="2">
                     <div class="row mb-3">
                         <div class="col-4">
-                            <label class="form-label"><b>FOLIO *</b></label>
+                            <label for="exampleInputEmail1" class="form-label"><b>FOLIO *</b></label>
                             <input type="text" class="form-control" placeholder="Ingrese el folio" name="Folio" required
                                 autofocus>
                         </div>
@@ -103,8 +104,9 @@
                                 name="presupuesto" step="0.01" required>
                         </div>
                         <div class="col-4">
-                            <label class="form-label"><b>CLIENTE *</b></label>
-                            <select class="select2 form-select" name="cliente" required>
+                            <label for="exampleInputEmail1" class="form-label"><b>CLIENTE *</b></label>
+                            <select class="select2 form-select" aria-label="Default select example" name="cliente"
+                                required>
                                 <option value="">Seleccione un cliente</option>
                                 {% for data in cliente %}
                                 <option value="{{data.ID}}">{{data.Nombre}}</option>
@@ -114,7 +116,7 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <label class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
+                            <label for="exampleInputEmail1" class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
                             <input type="text" class="form-control" placeholder="Ingrese el nombre del proyecto"
                                 name="proyectos" required>
                         </div>
@@ -131,13 +133,14 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <label class="form-label"><b>DESCRIPCIÓN *</b></label>
+                            <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
                             <textarea type="text" class="form-control" placeholder="Ingrese una breve descripción"
                                 name="descripcion" required></textarea>
                         </div>
+
                     </div>
                     <hr>
-                    <button type="submit" class="btn btn-primary" name="proyecto">Guardar</button>
+                    <button type="submit" class="btn btn-primary" name="mensuales">Guardar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </form>
             </div>

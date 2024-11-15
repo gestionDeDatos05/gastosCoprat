@@ -8,13 +8,24 @@ from Aplicacion.Consultas.Reportes import mostrarR
 urlpatterns = [
      #  Presentacion
     path('', views.inicio, name='T_Inicio'),
+    path('GASTOS_MENSUALES/', views.mensual, name='Mensual'),
     
     # VISTA PARA MOSTRAR LAS TABLAS DE LOS REGISTROS DADOS DE ALTA
-    path('Clientes/', mostrarC.tablaCliente, name='T_Clientes'),
-    path('Forma_de_pago/', mostrarC.tablaFormaDePago, name='T_Forma_de_pago'),
-    path('Catalogo/', mostrarC.tablaCategoria, name='T_Categoria'),
-    path('Proyecto/', mostrarC.tablaProyecto, name='T_Proyecto'),
+    path('Clientes_Proyecto/', mostrarC.tablaCliente, name='T_Clientes'),
+    path('Clientes_Mensuales/', mostrarC.tablaClienteMensuales, name='TM_Clientes'),
     
+    path('Forma_de_pago_Proyecto/', mostrarC.tablaFormaDePago, name='T_Forma_de_pago'),
+    path('Forma_de_pago_Mensuales/', mostrarC.tablaFormaDePagoMensuales, name='TM_Forma_de_pago'),
+    
+    path('Catalogo_Proyecto/', mostrarC.tablaCategoria, name='T_Categoria'),
+    path('Catalogo_Mensuales/', mostrarC.tablaCategoriaMensuales, name='TM_Categoria'),
+    
+    path('Proyecto/', mostrarC.tablaProyecto, name='T_Proyecto'),
+    path('Mensualidad/', mostrarC.tablaProyectoMensuales, name='T_Mensual'),
+    
+
+
+
     # VISTA PARA EDITAR LOS REGISTROS DADOS DE ALTA
     path('Editar_Clientes/', editarC.editarCliente, name='E_Clientes'),
     path('Editar_Forma_de_pago/', editarC.editarFormaDePago, name='E_Forma_de_pago'),
@@ -37,6 +48,7 @@ urlpatterns = [
 
     # DETALLADO DE GASTOS POR PROYECTOS
     path('Detallado_De_Gastos_Por_Proyecto/', mostrarP.detalleProyecto, name='D_Proyecto'),
+    path('Detallado_De_Gastos_Por_Mensualidad/', mostrarP.detalleGastos, name='D_Gastos'),
     # VISTA PARA EDITAR LOS REGISTROS DADOS DE ALTA
     path('Editar_Detallado_De_Gastos_Por_Proyecto/', editarP.editarProyecto, name='ED_Proyecto'),
     # VISTA PARA EDITAR LOS REGISTROS DADOS DE ALTA

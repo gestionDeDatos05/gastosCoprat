@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    
+
     {% load static %}
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -14,7 +14,7 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'ruta/select2/select2.min.css' %}" rel="stylesheet" />
-    
+
     <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'jquery/simple-datatables@latest' %}"></script>
     <script src="{% static 'jquery/jquery.dataTables.min.js' %}"></script>
@@ -37,18 +37,24 @@
                             d="M4.3125 11.25C3.89829 11.25 3.5625 11.5858 3.5625 12C3.5625 12.4142 3.89829 12.75 4.3125 12.75L20.3125 12.75C20.7267 12.75 21.0625 12.4142 21.0625 12C21.0625 11.5858 20.7267 11.25 20.3125 11.25L4.3125 11.25Z"
                             fill="#343C54" />
                     </svg>
-
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">PROYECTOS</a>
+                    <a href="#">COPRAT</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
+                <div class="sidebar-logo ml-3">
+                    <h6 class="text-white">
+                        <label style="color: transparent;">--------</label>
+                        GASTOS PROYECTOS
+                        <label style="color: transparent;"></label>
+                    </h6>
+                </div>
                 <hr class="m-0 p-0 text-white">
                 <li class="sidebar-item">
                     <a href="{% url 'T_Inicio' %}" class="sidebar-link">
                         <i class="lni lni-home"></i>
-                        <span>INICIO</span>
+                        <span>PROYECTOS</span>
                     </a>
                 </li>
                 <hr class="m-0 p-0 text-white">
@@ -75,6 +81,57 @@
                         <hr class="m-0 p-0 text-white">
                         <li class="sidebar-item">
                             <a href="{% url 'T_Proyecto' %}" class="sidebar-link pl-5">PROYECTO</a>
+                        </li>
+                    </ul>
+                </li>
+                <hr class="m-0 p-0 text-white">
+                <li class="sidebar-item">
+                    <a href="{% url 'R_Proyecto' %}" class="sidebar-link">
+                        <i class="lni lni-folder"></i>
+                        <span>REPORTES</span>
+                    </a>
+                </li>
+                <hr class="m-0 p-0 text-white mb-5">
+            </ul>
+            <ul class="sidebar-nav">
+                <div class="sidebar-logo ml-3 mt-5">
+                    <h6 class="text-white">
+                        <label style="color: transparent;">--------</label>
+                        GASTOS MENSUALES
+                        <label style="color: transparent;"></label>
+                    </h6>
+                </div>
+                <hr class="m-0 p-0 text-white">
+                <li class="sidebar-item">
+                    <a href="{% url 'Mensual' %}" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span>MENSUAL</span>
+                    </a>
+                </li>
+                <hr class="m-0 p-0 text-white">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#darAltaMensual" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-agenda"></i>
+                        <span>DAR DE ALTA</span>
+                    </a>
+                    <ul id="darAltaMensual" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{% url 'TM_Clientes' %}" class="sidebar-link pl-5">CLIENTE</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'TM_Forma_de_pago' %}" class="sidebar-link pl-5">FORMA DE PAGO</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'TM_Categoria' %}" class="sidebar-link pl-5">CATEGORIA</a>
+                        </li>
+                        <hr class="m-0 p-0 text-white">
+                        <li class="sidebar-item">
+                            <a href="{% url 'T_Estatus' %}" class="sidebar-link pl-5">ESTATUS</a>
+                        </li>
+                        <hr class="m-0 p-0 text-white">
+                        <li class="sidebar-item">
+                            <a href="{% url 'T_Mensual' %}" class="sidebar-link pl-5">MENSUAL</a>
                         </li>
                     </ul>
                 </li>

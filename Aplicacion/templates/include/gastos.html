@@ -7,7 +7,7 @@
 
 
 <div class="contenedor-2">
-    <h3 class="titulo-contenedor"><strong>PROYECTOS EN EJECUCIÓN</strong></h3>
+    <h3 class="titulo-contenedor"><strong>GASTOS MENSUALES</strong></h3>
     <h5 class="texto-contenedor mb-4">Aqui se muestra el avance transurrido en base a la fecha de inicio a la fecha de
         entrega.</h5>
     <hr class="mb-4">
@@ -21,7 +21,7 @@
     <div class="row">
         {% for proyecto in proyectos %}
         <div class="col-sm-12 col-md-4 col-lg-3 ">
-            <form action="{% url 'D_Proyecto' %}" method="POST" autocomplete="off" class="m-0 p-0">
+            <form action="{% url 'D_Gastos' %}" method="POST" autocomplete="off" class="m-0 p-0">
                 <input type="hidden" value="{{proyecto.ID}}" name="id">
                 <input type="hidden" value="{{proyecto.Folio}}" name="folio">
                 <input type="hidden" value="{{proyecto.IDCliente_id__Nombre}}" name="cliente">
@@ -72,7 +72,7 @@
                                     </div>
 
                                     <h6 class="text-curso-proyecto"><strong>Gasto actual:</strong><br>
-                                        $ {{monto.total_monto|floatformat:2|intcomma }} / 
+                                        $ {{monto.total_monto|floatformat:2|intcomma }} /
                                         ${{ proyecto.Presupuesto|floatformat:2|intcomma }}
                                     </h6>
                                     {% endif %}
@@ -112,7 +112,7 @@
                     <div class="modal-body">
                         <form action="{% url 'GD_Proyecto' %}" method="POST" autocomplete="off">
                             {% csrf_token %}
-                            <input type="hidden" name="areaTrabajo" value="1">
+                            <input type="hidden" name="areaTrabajo" value="2">
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <label class="form-label"><b>PROYECTO *</b></label><br>
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <button type="submit" class="btn btn-primary" name="inicio">Guardar</button>
+                            <button type="submit" class="btn btn-primary" name="gastos">Guardar</button>
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                         </form>
                     </div>

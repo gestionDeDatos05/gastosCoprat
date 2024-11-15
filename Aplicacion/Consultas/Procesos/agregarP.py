@@ -16,12 +16,13 @@ def guardarDetalleProyecto(request):
     descripcion = request.POST['descripcion'].capitalize() # CAMPO CLIENTE
     proveedor = request.POST['proveedor'].upper() # CAMPO CLIENTE
     fecha = request.POST['fecha'] # CAMPO CLIENTE
-
+    areaTrabajo = request.POST['areaTrabajo']    
+    
     # REGRESA AL FORMULARIO LOS DATOS POR DEFECTOS, PARA LOS CAMPOS SELECT
     fecha_actual = datetime.now().date()
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 
-    selectPago = tblFormaPago.objects.all()
-    selectCategoria = tblCategoriaGasto.objects.all()
+    selectPago = tblFormaPago.objects.filter(IDAreaTrabajo = areaTrabajo)
+    selectCategoria = tblCategoriaGasto.objects.filter(IDAreaTrabajo = areaTrabajo)
     proveedorSearch = tblProyecto.objects.values("Proveedor").distinct()
     nombreProyect = tblAltaProyecto.objects.get(ID  = idProyecto)
     FProyecto = nombreProyect.Folio
@@ -33,6 +34,8 @@ def guardarDetalleProyecto(request):
     if request.method == 'POST':
         if 'inicio' in request.POST:
             return redirect('T_Inicio')
+        elif 'gastos' in request.POST:
+            return redirect('Mensual')
         else:
             # REGRESA AL FORMULARIO LOS DATOS SELECCIOANDOS ANTERIORMENTE
             id = request.POST['idProyecto'] # CAMPO id
