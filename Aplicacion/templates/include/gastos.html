@@ -18,88 +18,114 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class="row">
-        {% for proyecto in proyectos %}
-        <div class="col-sm-12 col-md-4 col-lg-3 ">
-            <form action="{% url 'D_Gastos' %}" method="POST" autocomplete="off" class="m-0 p-0">
-                <input type="hidden" value="{{proyecto.ID}}" name="id">
-                <input type="hidden" value="{{proyecto.Folio}}" name="folio">
-                <input type="hidden" value="{{proyecto.IDCliente_id__Nombre}}" name="cliente">
-                <input type="hidden" value="{{proyecto.Proyecto}}" name="proyecto">
-                <input type="hidden" value="{{proyecto.Descripcion}}" name="descripcion">
-                <button type="submit" style="background: none; border: none; padding: 0; outline: none;">
-                    {% csrf_token %}
-                    <div class="card card-contenedor-2 mb-5" style="width: 100%;">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-6">
-                                    <h5 class="card-title-contenedor-2"><strong>{{proyecto.Folio}}</strong></h5>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="card-title-contenedor-2">
-                                        <strong>{{proyecto.IDCliente_id__Nombre}}</strong>
+    <style>
+        #contenedor-cards .col {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+
+    <div class="container">
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary me-2" onclick="cambiarColumnas(3)">3 Cards</button>
+            <button class="btn btn-primary" onclick="cambiarColumnas(4)">4 Cards</button>
+        </div>
+        <div id="contenedor-cards" class="row g-3">
+            {% for proyecto in proyectos %}
+            <div class="col-lg-4">
+                <div class="card card-contenedor-2 mb-5">
+                    <form action="{% url 'D_Gastos' %}" method="POST" autocomplete="off" class="m-0 p-0">
+                        <input type="hidden" value="{{proyecto.ID}}" name="id">
+                        <input type="hidden" value="{{proyecto.Folio}}" name="folio">
+                        <input type="hidden" value="{{proyecto.IDCliente_id__Nombre}}" name="cliente">
+                        <input type="hidden" value="{{proyecto.Proyecto}}" name="proyecto">
+                        <input type="hidden" value="{{proyecto.Descripcion}}" name="descripcion">
+                        <button type="submit" style="background: none; border: none; padding: 0; outline: none;">
+                            {% csrf_token %}
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="card-title-contenedor-2"><strong>{{proyecto.Folio}}</strong></h5>
+                                    </div>
+                                    <div class="col-6">
+                                        <h5 class="card-title-contenedor-2">
+                                            <strong>{{proyecto.IDCliente_id__Nombre}}</strong>
+                                        </h5>
+                                    </div>
+                                    <h5 class="card-subtitle-contenedor-2"><strong>{{proyecto.Proyecto}}</strong>
                                     </h5>
                                 </div>
-                                <h5 class="card-subtitle-contenedor-2"><strong>{{proyecto.Proyecto}}</strong></h5>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="porcentajes"
-                                        style="--porcentaje: {{proyecto.porcentaje_acumulado}}; --color: blue;">
-                                        <svg width="120" height="120">
-                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
-                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
-                                        </svg>
-                                        <span id="{{ proyecto.Folio }}" style="font-size: 16px;"
-                                            data-target="{{ proyecto.porcentaje_acumulado }}">0 <label>%</label></span>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="porcentajes"
+                                            style="--porcentaje: {{proyecto.porcentaje_acumulado}}; --color: blue;">
+                                            <svg width="120" height="120">
+                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
+                                                    pathlength="100" />
+                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
+                                                    pathlength="100" />
+                                            </svg>
+                                            <span id="{{ proyecto.Folio }}" style="font-size: 16px;"
+                                                data-target="{{ proyecto.porcentaje_acumulado }}">0
+                                                <label>%</label></span>
+                                        </div>
+                                        <h6 class="text-curso-proyecto"><strong>Dias totales:</strong><br>
+                                            {{proyecto.DiasTotales}}</h6>
+                                        <hr>
+                                        <h6 class="text-curso-proyecto"><strong>Dias utilizados:</strong><br>
+                                            {{proyecto.DiasRestantes}}
+                                        </h6>
                                     </div>
-                                    <h6 class="text-curso-proyecto"><strong>Dias utilizados:</strong><br>
-                                        {{proyecto.DiasRestantes}} / {{proyecto.DiasTotales}}</h6>
-                                </div>
-                                <div class="col-6">
-                                    {% for monto in montoXProyecto %}
-                                    {% if proyecto.ID == monto.IDProyecto_id %}
-                                    <div class="porcentajes"
-                                        style="--porcentaje: {{proyecto.porcentaje_gastos}}; --color: rgb(0, 160, 13);">
-                                        <svg width="120" height="120">
-                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
-                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
-                                        </svg>
-                                        <span id="{{ proyecto.ID }}" style="font-size: 16px;"
-                                            data-target="{{ proyecto.porcentaje_gastos }}">0 <label>%</label></span>
+                                    <div class="col-6">
+                                        {% for monto in montoXProyecto %}
+                                        {% if proyecto.ID == monto.IDProyecto_id %}
+                                        <div class="porcentajes"
+                                            style="--porcentaje: {{proyecto.porcentaje_gastos}}; --color: rgb(0, 160, 13);">
+                                            <svg width="120" height="120">
+                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
+                                                    pathlength="100" />
+                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
+                                                    pathlength="100" />
+                                            </svg>
+                                            <span id="{{ proyecto.ID }}" style="font-size: 16px;"
+                                                data-target="{{ proyecto.porcentaje_gastos|floatformat:0 }}">0
+                                                <label>%</label></span>
+                                        </div>
+
+                                        <h6 class="text-curso-proyecto"><strong>Presupuesto:</strong><br>
+                                            $ {{ proyecto.Presupuesto|floatformat:2|intcomma }} </h6>
+                                        <hr>
+                                        <h6 class="text-curso-proyecto"><strong>Gasto actual:</strong><br>
+                                            $ {{proyecto.total_monto|floatformat:2|intcomma }}
+                                        </h6>
+                                        {% endif %}
+                                        {% endfor %}
                                     </div>
-
-                                    <h6 class="text-curso-proyecto"><strong>Gasto actual:</strong><br>
-                                        $ {{monto.total_monto|floatformat:2|intcomma }} /
-                                        ${{ proyecto.Presupuesto|floatformat:2|intcomma }}
-                                    </h6>
-                                    {% endif %}
-                                    {% endfor %}
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-6">
-                                    <h6 class="c2-fecha-inicio"><strong>Fecha inicio:</strong></h6>
-                                    <p class="c2-fecha-inicio-bd">{{ proyecto.FechaInicio|date:"d/m/Y" }}</p>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6 class="c2-fecha-inicio"><strong>Fecha inicio:</strong></h6>
+                                        <p class="c2-fecha-inicio-bd">{{ proyecto.FechaInicio|date:"d/m/Y" }}</p>
 
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="c2-fecha-final"><strong>Fecha Final:</strong></h6>
+                                        <p class="c2-fecha-final-bd">{{proyecto.Fechafinal|date:"d/m/Y" }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <h6 class="c2-fecha-final"><strong>Fecha Final:</strong></h6>
-                                    <p class="c2-fecha-final-bd">{{proyecto.Fechafinal|date:"d/m/Y" }}</p>
-                                </div>
+                                <label style="color: blue; text-decoration: underline; cursor: pointer;">Pulse aquí,
+                                    para ver mas detalles
+                                </label>
                             </div>
-                            <label style="color: blue; text-decoration: underline; cursor: pointer;">Pulse aquí, para
-                                ver mas detalles</label>
-                        </div>
-                    </div>
-                </button>
-            </form>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -154,8 +180,8 @@
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label"><b>MONTO *</b></label>
-                                    <input type="number" class="form-control" placeholder="Ingrese el monto"
-                                        name="monto" step="0.01" required>
+                                    <input type="text" class="form-control" placeholder="Ingrese el monto" name="monto"
+                                        onkeyup="moneda(this);" onkeydown="return decimal(event, this)" required>
                                 </div>
                             </div>
 
@@ -190,37 +216,13 @@
             </div>
         </div>
     </div>
+    <button type="button" class="BotonAgregar1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div class="sign">+</div>
+        <div class="text">AGREGAR GASTO</div>
+    </button>
 </div>
-<button type="button" class="BotonAgregar1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    <div class="sign">+</div>
-    <div class="text">AGREGAR GASTO</div>
-</button>
-
-<script>
-    const facturaInput = document.getElementById('facturaInput');
-    const interesadoCheckbox = document.getElementById('interesadoCheckbox');
-    const facturaHiddenInput = document.getElementById('facturaHiddenInput');
-
-    // Función para habilitar/deshabilitar el campo de email
-    function toggleEmailInput() {
-        if (interesadoCheckbox.checked) {
-            facturaInput.disabled = false;
-            facturaHiddenInput.disabled = true; // Deshabilitar el campo oculto cuando el campo visible esté habilitado
-        } else {
-            facturaInput.disabled = true;
-            facturaInput.value = 'SF'; // Limpia el campo si se deshabilita
-            facturaHiddenInput.value = 'SF'; // Enviar un valor por defecto en el campo oculto
-            facturaHiddenInput.disabled = false; // Habilitar el campo oculto cuando el campo visible esté deshabilitado
-        }
-    }
-
-    // Escuchar cambios en el checkbox
-    interesadoCheckbox.addEventListener('change', toggleEmailInput);
-
-    // Llamada inicial para configurar el estado del input
-    toggleEmailInput();
-</script>
-
+<script src="{% static 'assets/js/factura.js' %}"></script>
+<script src="{% static 'assets/js/cards_dinamicos.js' %}"></script>
 <script src="{% static 'assets/js/animated-value.js' %}"></script>
 <script src="{% static 'assets/js/animated_porcentaje.js' %}"></script>
 {% endblock %}

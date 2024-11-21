@@ -73,6 +73,7 @@ def reportesProyecto(request):
             LEFT JOIN Aplicacion_tblFormaPago ON Aplicacion_tblProyecto.IDFormaDePago_id = Aplicacion_tblFormaPago.ID
             LEFT JOIN Aplicacion_tblCategoriaGasto ON Aplicacion_tblProyecto.IDCategoria_id = Aplicacion_tblCategoriaGasto.ID
             WHERE {where_clause} AND Aplicacion_tblAltaProyecto.IDEstatus_id = 1 AND Aplicacion_tblAltaProyecto.IDAreaTrabajo_id = 1
+            ORDER BY Aplicacion_tblProyecto.Fecha desc
         """
         # Ejecutar la consulta
         with connection.cursor() as cursor:
@@ -173,6 +174,7 @@ def reportesMensuales(request):
             LEFT JOIN Aplicacion_tblFormaPago ON Aplicacion_tblProyecto.IDFormaDePago_id = Aplicacion_tblFormaPago.ID
             LEFT JOIN Aplicacion_tblCategoriaGasto ON Aplicacion_tblProyecto.IDCategoria_id = Aplicacion_tblCategoriaGasto.ID
             WHERE {where_clause} AND Aplicacion_tblAltaProyecto.IDEstatus_id = 1 AND Aplicacion_tblAltaProyecto.IDAreaTrabajo_id = 2
+            ORDER BY Aplicacion_tblProyecto.Fecha desc
         """
         # Ejecutar la consulta
         with connection.cursor() as cursor:

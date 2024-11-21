@@ -54,7 +54,7 @@
                                 <input type="hidden" value="{{context.cliente}}" name="cliente">
                                 <input type="hidden" value="{{context.proyecto}}" name="proyecto">
                                 <input type="hidden" value="{{context.descripcion}}" name="descripcionProyecto">
-                                <button class="btn btn-success">Editar</button>
+                                <button class="btn btn-success btn-sm">Editar</button>
                             </form>
                         </td>
                     </tr>
@@ -153,8 +153,8 @@
                         </div>
                         <div class="col-6">
                             <label class="form-label"><b>MONTO *</b></label>
-                            <input type="number" class="form-control" placeholder="Ingrese el monto" name="monto"
-                                step="0.01" required>
+                            <input type="text" class="form-control" placeholder="Ingrese el monto" name="monto"
+                                onkeyup="moneda(this);" onkeydown="return decimal(event, this)" required>
                         </div>
                     </div>
 

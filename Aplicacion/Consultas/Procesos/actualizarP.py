@@ -14,6 +14,9 @@ def actualizarProyecto(request):
     proveedor = request.POST['proveedor'].upper() # CAMPO fechaInicio
     fecha = request.POST['fecha'] # CAMPO fechaFinal
     
+    if isinstance(monto, str):
+        monto = monto.replace(',', '')
+        
     actualizarDetalleProyecto = tblProyecto.objects.get(ID=id)
     categoria_instancia = tblCategoriaGasto.objects.get(ID=categoria)
     formaPago_instancia = tblFormaPago.objects.get(ID=pago)

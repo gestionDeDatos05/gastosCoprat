@@ -187,6 +187,7 @@ a.sidebar-link:hover {
 
 .text-curso-proyecto {
     text-align: center;
+    font-size: 13px;
 }
 
 .card-title-contenedor-2 {
@@ -227,13 +228,20 @@ a.sidebar-link:hover {
     padding: 0 2rem;
 }
 
-.editar-alta {
+/* .editar-alta {
     padding: 2rem 2rem 5rem 2rem;
-    width: 35%;
+    width: 85%;
     justify-content: center;
     margin: auto;
 
 
+} */
+thead {
+    font-size: 14px !important;
+}
+
+tbody {
+    font-size: 12px !important;
 }
 
 .tabla-alta {

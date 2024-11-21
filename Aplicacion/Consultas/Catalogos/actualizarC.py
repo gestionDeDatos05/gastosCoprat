@@ -62,6 +62,9 @@ def actualizarAltaProyecto(request):
     fechaFinal = request.POST['fechaFinal'] # CAMPO CLIENTE
     presupuesto = request.POST['presupuesto'] # CAMPO CLIENTE
     
+    if isinstance(presupuesto, str):
+        presupuesto = presupuesto.replace(',', '')
+        
     actualizarAltaProyecto = tblAltaProyecto.objects.get(ID=id)
     estatus_instancia = tblEstatus.objects.get(ID=estatus)
     cliente_instancia = tblCliente.objects.get(ID=cliente)

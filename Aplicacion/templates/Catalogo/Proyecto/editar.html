@@ -4,9 +4,6 @@
 {% block title %}GASTOS POR PROYECTO{% endblock %}
 
 {% block body %}
-<style>
-
-</style>
 <div class="contenedor-tabla-alta">
     <h3 class="titulo-contenedor"><strong>PROYECTO</strong></h3>
     <h5 class="texto-contenedor mb-4">Aqui se muestra los proyectos dados de alta</h5>
@@ -37,7 +34,6 @@
                             <label class="form-label"><b>NOMBRE DEL PROYECTO *</b></label>
                             <input type="text" class="form-control" value="{{TEProyecto.Proyecto}}"
                                 placeholder="Ingrese el nombre del proyecto" name="proyecto" required>
-
                         </div>
                     </div>
 
@@ -56,8 +52,9 @@
                         </div>
                         <div class="col-4">
                             <label class="form-label"><b>PRESUPUESTO *</b></label>
-                            <input type="number" class="form-control" placeholder="Ingrese el presupuesto"
-                                name="presupuesto" step="0.01" value="{{TEProyecto.Presupuesto}}" required>
+                            <input type="text" class="form-control" placeholder="Ingrese el presupuesto"
+                                name="presupuesto" value="{{TEProyecto.Presupuesto}}" required onkeyup="moneda(this);"
+                                onkeydown="return decimal(event, this)">
                         </div>
                         <div class="col-8">
                             <label class="form-label"><b>CLIENTE *</b></label>
@@ -101,5 +98,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}

@@ -69,7 +69,7 @@
                             <form action="{% url 'E_Proyecto' %}" method="POST" autocomplete="off">
                                 {% csrf_token %}
                                 <input type="hidden" value="{{datos.ID}}" name="id">
-                                <button class="btn btn-success">Editar</button>
+                                <button class="btn btn-success btn-sm">Editar</button>
                             </form>
                         </td>
                     </tr>
@@ -100,8 +100,9 @@
                         </div>
                         <div class="col-4">
                             <label for="fechaInicio" class="form-label"><b>PRESUPUESTO *</b></label>
-                            <input type="number" class="form-control" placeholder="Ingrese el presupuesto"
-                                name="presupuesto" step="0.01" required>
+                            <input type="text" class="form-control" placeholder="Ingrese el presupuesto"
+                                name="presupuesto" onkeyup="moneda(this);" onkeydown="return decimal(event, this)"
+                                required>
                         </div>
                         <div class="col-4">
                             <label for="exampleInputEmail1" class="form-label"><b>CLIENTE *</b></label>

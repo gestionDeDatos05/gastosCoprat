@@ -124,7 +124,7 @@
             <div class="card card-contenido-alta">
                 <h4><strong>Ver gastos registrados de este proyecto</strong></h4>
                 {% for datos in suma_Total %}
-                <h5><b>Gasto total:</b> $ {{ datos.0|default:"0" }}</h5>
+                <h5><b>Gasto total:</b> $ {{ datos.0|default:"0"|floatformat:2|intcomma }}</h5>
                 {% endfor %}
                 <hr>
                 <div class="table-responsive py-1" style="max-width: 7000px; overflow-y: auto;">

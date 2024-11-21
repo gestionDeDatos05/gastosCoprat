@@ -3,6 +3,14 @@
 
 {% block title %}GASTOS POR PROYECTO{% endblock %}
 
+<style>
+    .editar-alta {
+        padding: 2rem 2rem 5rem 2rem;
+        width: 85%;
+        justify-content: center;
+        margin: auto;
+    }
+</style>
 {% block body %}
 <div class="contenedor-tabla-alta">
     <h3 class="titulo-contenedor"><strong>
@@ -31,9 +39,9 @@
                     <input type="hidden" value="{{context.cliente}}" name="cliente">
                     <input type="hidden" value="{{context.proyecto}}" name="proyecto">
                     <input type="hidden" value="{{context.descripcion}}" name="descripcionProyecto">
-                
+
                     <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-lg-3">
                             <label for="exampleInputEmail1" class="form-label"><b>CATEGORIA *</b></label>
                             <select class="select2 form-select" aria-label="Default select example" name="categoria"
                                 required>
@@ -45,7 +53,7 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-3">
                             <label for="exampleInputEmail1" class="form-label"><b>FORMA DE PAGO *</b></label>
                             <select class="select2 form-select" aria-label="Default select example" name="pago"
                                 required>
@@ -57,27 +65,25 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-lg-3">
                             <label for="exampleInputEmail1" class="form-label"><b>FACTURA *</b></label>
                             <input type="text" class="form-control" placeholder="Ingrese la factura" name="factura"
                                 value="{{TEProyecto.Factura}}" required autofocus>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-3">
                             <label for="exampleInputEmail1" class="form-label"><b>MONTO *</b></label>
-                            <input type="number" class="form-control" placeholder="Ingrese el monto" name="monto"
-                                value="{{TEProyecto.Monto}}" step="0.01" required>
+                            <input type="text" class="form-control" placeholder="Ingrese el monto" name="monto"
+                                value="{{TEProyecto.Monto}}" onkeyup="moneda(this);"
+                                onkeydown="return decimal(event, this)" required>
                         </div>
                     </div>
-
-                    <div class=" mb-3">
-                        <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
-                        <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
-                            value="{{TEProyecto.Descripcion}}" name="descripcion" required>
-                    </div>
                     <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-lg-6">
+                            <label for="exampleInputEmail1" class="form-label"><b>DESCRIPCIÓN *</b></label>
+                            <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
+                                value="{{TEProyecto.Descripcion}}" name="descripcion" required>
+                        </div>
+                        <div class="col-lg-3">
                             <label for="exampleInputEmail1" class="form-label"><b>PROVEEDOR *</b></label>
                             <input class="form-control" list="datalistOptions" name="proveedor"
                                 value="{{TEProyecto.Proveedor}}" placeholder="Ingrese el proveedor" required>
@@ -87,12 +93,13 @@
                                     {% endfor %}
                             </datalist>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-3">
                             <label for="fechaFinal" class="form-label"><b>FECHA *</b></label>
                             <input type="date" class="form-control" value="{{Fecha|date:'Y-m-d'}}" name="fecha"
                                 required>
                         </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary col-12">Actualizar</button>
 
                 </form>

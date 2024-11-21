@@ -71,17 +71,17 @@ def guardarProyecto(request):
     Folio = request.POST['Folio'].upper() # CAMPO CLIENTE
     cliente = request.POST['cliente'] # CAMPO CLIENTE
     proyectos = request.POST['proyectos'].upper() # CAMPO CLIENTE
-    presupuesto = request.POST['presupuesto'] # CAMPO CLIENTE
+    Presupuesto = request.POST['presupuesto'] # CAMPO CLIENTE
     descripcion = request.POST['descripcion'] # CAMPO CLIENTE
     fechaInicio = request.POST['fechaInicio'] # CAMPO CLIENTE
     fechaFinal = request.POST['fechaFinal'] # CAMPO CLIENTE
     EstatusDefault = 1
     areaTrabajo = request.POST['areaTrabajo']    
-    
-    print(proyectos)
-    
+
+    if isinstance(Presupuesto, str):
+        Presupuesto = Presupuesto.replace(',', '')
     tblAltaProyecto.objects.create( Folio = Folio, IDEstatus_id = EstatusDefault, IDCliente_id = cliente, Proyecto = proyectos, 
-    Descripcion = descripcion, FechaInicio = fechaInicio, Fechafinal = fechaFinal, Presupuesto =  presupuesto, IDAreaTrabajo_id = areaTrabajo)
+    Descripcion = descripcion, FechaInicio = fechaInicio, Fechafinal = fechaFinal, Presupuesto =  Presupuesto, IDAreaTrabajo_id = areaTrabajo)
     messages.success(request, f'El proyecto {proyectos} se ha registrado exitosamente')
     if request.method == 'POST':
         if 'proyecto' in request.POST:

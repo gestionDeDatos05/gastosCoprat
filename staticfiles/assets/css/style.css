@@ -41,11 +41,12 @@ body {
 #sidebar {
     width: 70px;
     min-width: 70px;
-    z-index: 1000;
+
     transition: all .25s ease-in-out;
     background-color: #0e2238;
     display: flex;
     flex-direction: column;
+    z-index: 1060;
 }
 
 #sidebar.expand {
@@ -186,6 +187,7 @@ a.sidebar-link:hover {
 
 .text-curso-proyecto {
     text-align: center;
+    font-size: 13px;
 }
 
 .card-title-contenedor-2 {
@@ -226,13 +228,20 @@ a.sidebar-link:hover {
     padding: 0 2rem;
 }
 
-.editar-alta {
+/* .editar-alta {
     padding: 2rem 2rem 5rem 2rem;
-    width: 35%;
+    width: 85%;
     justify-content: center;
     margin: auto;
 
 
+} */
+thead {
+    font-size: 14px !important;
+}
+
+tbody {
+    font-size: 12px !important;
 }
 
 .tabla-alta {
@@ -360,7 +369,7 @@ a.sidebar-link:hover {
 
 .circleGrafica {
     fill: none;
-    stroke-width: 15;
+    stroke-width: 8;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
     stroke-dasharray: 100 100;
@@ -535,8 +544,10 @@ a.sidebar-link:hover {
 
 .BotonBuscar1 {
     position: fixed;
+    width: 15%;
+    z-index: 1060;
     /* Fija el botón en la pantalla */
-    right: 40px !important;
+    right: 74px !important;
     /* Coloca el botón a 40px del borde derecho */
-    bottom: 30px !important;
+    top: 58px !important;
 }

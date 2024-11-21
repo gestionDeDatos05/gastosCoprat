@@ -18,6 +18,9 @@ def guardarDetalleProyecto(request):
     fecha = request.POST['fecha'] # CAMPO CLIENTE
     areaTrabajo = request.POST['areaTrabajo']    
     
+    if isinstance(monto, str):
+        monto = monto.replace(',', '')
+        
     # REGRESA AL FORMULARIO LOS DATOS POR DEFECTOS, PARA LOS CAMPOS SELECT
     fecha_actual = datetime.now().date()
     fecha_formateada = fecha_actual.strftime('%Y-%m-%d') 

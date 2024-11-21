@@ -58,7 +58,7 @@
                                 <form action="{% url 'E_Forma_de_pago' %}" method="POST" autocomplete="off">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{datos.ID}}" name="id">
-                                    <button class="btn btn-success">Editar</button>
+                                    <button class="btn btn-success btn-sm">Editar</button>
                                 </form>
                             </td>
                         </tr>
