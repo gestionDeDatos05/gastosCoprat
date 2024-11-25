@@ -22,6 +22,43 @@
         #contenedor-cards .col {
             transition: all 0.3s ease-in-out;
         }
+
+        .card {
+            height: 100%;
+            /* Asegura que la tarjeta ocupe toda la altura disponible */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card {
+            min-height: 300px;
+            /* Ajusta según tu diseño */
+        }
+
+        .card-header {
+            height: 120px;
+            /* Mantén la altura que necesitas */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            /* Opcional, para centrar el texto */
+        }
+
+        .card-title-contenedor-2,
+        .card-subtitle-contenedor-2 {
+            word-wrap: break-word;
+            /* Permite que las palabras largas se ajusten */
+            white-space: normal;
+            /* Evita que el texto se quede en una sola línea */
+        }
+
+        .card-title-contenedor-2 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* Opcional, agrega puntos suspensivos si es necesario */
+        }
     </style>
 
     <div class="d-flex justify-content-end mb-3">
@@ -38,9 +75,10 @@
                     <input type="hidden" value="{{proyecto.IDCliente_id__Nombre}}" name="cliente">
                     <input type="hidden" value="{{proyecto.Proyecto}}" name="proyecto">
                     <input type="hidden" value="{{proyecto.Descripcion}}" name="descripcion">
-                    <button type="submit" style="background: none; border: none; padding: 0; outline: none;">
+                    <button type="submit"
+                        style="background: none; border: none; padding: 0; outline: none; width: 100%;">
                         {% csrf_token %}
-                        <div class="card-header">
+                        <div class="card-header" style="height: 120px;">
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="card-title-contenedor-2"><strong>{{proyecto.Folio}}</strong></h5>
