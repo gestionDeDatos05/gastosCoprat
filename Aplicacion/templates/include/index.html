@@ -24,193 +24,187 @@
         }
     </style>
 
-    <div class="container">
-        <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-primary me-2" onclick="cambiarColumnas(3)">3 Cards</button>
-            <button class="btn btn-primary" onclick="cambiarColumnas(4)">4 Cards</button>
-        </div>
-        <div id="contenedor-cards" class="row g-3">
-            {% for proyecto in proyectos %}
-            <div class="col-lg-4">
-                <div class="card card-contenedor-2 mb-5">
-                    <form action="{% url 'D_Proyecto' %}" method="POST" autocomplete="off" class="m-0 p-0">
-                        <input type="hidden" value="{{proyecto.ID}}" name="id">
-                        <input type="hidden" value="{{proyecto.Folio}}" name="folio">
-                        <input type="hidden" value="{{proyecto.IDCliente_id__Nombre}}" name="cliente">
-                        <input type="hidden" value="{{proyecto.Proyecto}}" name="proyecto">
-                        <input type="hidden" value="{{proyecto.Descripcion}}" name="descripcion">
-                        <button type="submit" style="background: none; border: none; padding: 0; outline: none;">
-                            {% csrf_token %}
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h5 class="card-title-contenedor-2"><strong>{{proyecto.Folio}}</strong></h5>
+    <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-primary me-2" onclick="cambiarColumnas(3)">3 Cards</button>
+        <button class="btn btn-primary" onclick="cambiarColumnas(4)">4 Cards</button>
+    </div>
+    <div id="contenedor-cards" class="row g-3">
+        {% for proyecto in proyectos %}
+        <div class="col-lg-4">
+            <div class="card card-contenedor-2 mb-5">
+                <form action="{% url 'D_Proyecto' %}" method="POST" autocomplete="off" class="m-0 p-0">
+                    <input type="hidden" value="{{proyecto.ID}}" name="id">
+                    <input type="hidden" value="{{proyecto.Folio}}" name="folio">
+                    <input type="hidden" value="{{proyecto.IDCliente_id__Nombre}}" name="cliente">
+                    <input type="hidden" value="{{proyecto.Proyecto}}" name="proyecto">
+                    <input type="hidden" value="{{proyecto.Descripcion}}" name="descripcion">
+                    <button type="submit" style="background: none; border: none; padding: 0; outline: none;">
+                        {% csrf_token %}
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="card-title-contenedor-2"><strong>{{proyecto.Folio}}</strong></h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="card-title-contenedor-2">
+                                        <strong>{{proyecto.IDCliente_id__Nombre}}</strong>
+                                    </h5>
+                                </div>
+                                <h5 class="card-subtitle-contenedor-2"><strong>{{proyecto.Proyecto}}</strong></h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="porcentajes"
+                                        style="--porcentaje: {{proyecto.porcentaje_acumulado}}; --color: blue;">
+                                        <svg width="120" height="120">
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                        </svg>
+                                        <span id="{{ proyecto.Folio }}" style="font-size: 16px;"
+                                            data-target="{{ proyecto.porcentaje_acumulado }}">0
+                                            <label>%</label></span>
                                     </div>
-                                    <div class="col-6">
-                                        <h5 class="card-title-contenedor-2">
-                                            <strong>{{proyecto.IDCliente_id__Nombre}}</strong>
-                                        </h5>
+                                    <h6 class="text-curso-proyecto"><strong>Dias totales:</strong><br>
+                                        {{proyecto.DiasTotales}}</h6>
+                                    <hr>
+                                    <h6 class="text-curso-proyecto"><strong>Dias utilizados:</strong><br>
+                                        {{proyecto.DiasRestantes}}</h6>
+                                </div>
+                                <div class="col-6">
+
+                                    <div class="porcentajes"
+                                        style="--porcentaje: {{proyecto.porcentaje_gastos}}; --color: rgb(0, 160, 13);">
+                                        <svg width="120" height="120">
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                            <circle class="circleGrafica" r="40" cx="50%" cy="50%" pathlength="100" />
+                                        </svg>
+                                        <span id="{{ proyecto.ID }}" style="font-size: 16px;"
+                                            data-target="{{ proyecto.porcentaje_gastos|floatformat:0 }}">0
+                                            <label>%</label></span>
                                     </div>
-                                    <h5 class="card-subtitle-contenedor-2"><strong>{{proyecto.Proyecto}}</strong></h5>
+
+                                    <h6 class="text-curso-proyecto"><strong>Presupuesto:</strong><br>
+                                        $ {{ proyecto.Presupuesto|floatformat:2|intcomma }} </h6>
+                                    <hr>
+                                    <h6 class="text-curso-proyecto"><strong>Gasto actual:</strong><br>
+                                        $ {{proyecto.total_monto|floatformat:2|intcomma }}
+                                    </h6>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="porcentajes"
-                                            style="--porcentaje: {{proyecto.porcentaje_acumulado}}; --color: blue;">
-                                            <svg width="120" height="120">
-                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
-                                                    pathlength="100" />
-                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
-                                                    pathlength="100" />
-                                            </svg>
-                                            <span id="{{ proyecto.Folio }}" style="font-size: 16px;"
-                                                data-target="{{ proyecto.porcentaje_acumulado }}">0
-                                                <label>%</label></span>
-                                        </div>
-                                        <h6 class="text-curso-proyecto"><strong>Dias totales:</strong><br>
-                                            {{proyecto.DiasTotales}}</h6>
-                                        <hr>
-                                        <h6 class="text-curso-proyecto"><strong>Dias utilizados:</strong><br>
-                                            {{proyecto.DiasRestantes}}</h6>
-                                    </div>
-                                    <div class="col-6">
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h6 class="c2-fecha-inicio"><strong>Fecha inicio:</strong></h6>
+                                    <p class="c2-fecha-inicio-bd">{{ proyecto.FechaInicio|date:"d/m/Y" }}</p>
 
-                                        <div class="porcentajes"
-                                            style="--porcentaje: {{proyecto.porcentaje_gastos}}; --color: rgb(0, 160, 13);">
-                                            <svg width="120" height="120">
-                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
-                                                    pathlength="100" />
-                                                <circle class="circleGrafica" r="40" cx="50%" cy="50%"
-                                                    pathlength="100" />
-                                            </svg>
-                                            <span id="{{ proyecto.ID }}" style="font-size: 16px;"
-                                                data-target="{{ proyecto.porcentaje_gastos|floatformat:0 }}">0
-                                                <label>%</label></span>
-                                        </div>
-
-                                        <h6 class="text-curso-proyecto"><strong>Presupuesto:</strong><br>
-                                            $ {{ proyecto.Presupuesto|floatformat:2|intcomma }} </h6>
-                                        <hr>
-                                        <h6 class="text-curso-proyecto"><strong>Gasto actual:</strong><br>
-                                            $ {{proyecto.total_monto|floatformat:2|intcomma }}
-                                        </h6>
-                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="c2-fecha-final"><strong>Fecha Final:</strong></h6>
+                                    <p class="c2-fecha-final-bd">{{proyecto.Fechafinal|date:"d/m/Y" }}</p>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h6 class="c2-fecha-inicio"><strong>Fecha inicio:</strong></h6>
-                                        <p class="c2-fecha-inicio-bd">{{ proyecto.FechaInicio|date:"d/m/Y" }}</p>
-
-                                    </div>
-                                    <div class="col-6">
-                                        <h6 class="c2-fecha-final"><strong>Fecha Final:</strong></h6>
-                                        <p class="c2-fecha-final-bd">{{proyecto.Fechafinal|date:"d/m/Y" }}</p>
-                                    </div>
-                                </div>
-                                <label style="color: blue; text-decoration: underline; cursor: pointer;">
-                                    Pulse aquí, para ver mas detalles
-                                </label>
-                            </div>
-                        </button>
-                    </form>
-                </div>
+                            <label style="color: blue; text-decoration: underline; cursor: pointer;">
+                                Pulse aquí, para ver mas detalles
+                            </label>
+                        </div>
+                    </button>
+                </form>
             </div>
-            {% endfor %}
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{% url 'GD_Proyecto' %}" method="POST" autocomplete="off">
-                            {% csrf_token %}
-                            <input type="hidden" name="areaTrabajo" value="1">
-                            <div class="row mb-3">
-                                <div class="col-4">
-                                    <label class="form-label"><b>PROYECTO *</b></label><br>
-                                    <select class="select2 form-select w-100" name="idProyecto" required>
-                                        <option value="">Seleccione un proyecto</option>
-                                        {% for data in selectProyecto %}
-                                        <option value="{{data.ID}}">{{data.Folio }} - {{data.Proyecto}}
-                                        </option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label"><b>CATEGORIA *</b></label><br>
-                                    <select class="select2 form-select w-100" name="categoria" required>
-                                        <option value="">Seleccione la categoria</option>
-                                        {% for data in selectCategoria %}
-                                        <option value="{{data.ID}}">{{data.Descripcion}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">
-                                        <b>FORMA DE PAGO*</b>
-                                    </label>
-                                    <br>
-                                    <select class="select2 form-select w-100" name="pago" required>
-                                        <option value="">Seleccione el pago</option>
-                                        {% for data in selectPago %}
-                                        <option value="{{data.ID}}">{{data.Descripcion}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
+        {% endfor %}
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'GD_Proyecto' %}" method="POST" autocomplete="off">
+                        {% csrf_token %}
+                        <input type="hidden" name="areaTrabajo" value="1">
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <label class="form-label"><b>PROYECTO *</b></label><br>
+                                <select class="select2 form-select w-100" name="idProyecto" required>
+                                    <option value="">Seleccione un proyecto</option>
+                                    {% for data in selectProyecto %}
+                                    <option value="{{data.ID}}">{{data.Folio }} - {{data.Proyecto}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    <label class="form-label"><input class="form-check-input" type="checkbox" value=""
-                                            id="interesadoCheckbox" checked><b>
-                                            FACTURA *</b></label>
-                                    <input type="text" class="form-control" placeholder="Ingrese la factura"
-                                        name="factura" id="facturaInput" required autofocus>
+                            <div class="col-4">
+                                <label class="form-label"><b>CATEGORIA *</b></label><br>
+                                <select class="select2 form-select w-100" name="categoria" required>
+                                    <option value="">Seleccione la categoria</option>
+                                    {% for data in selectCategoria %}
+                                    <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">
+                                    <b>FORMA DE PAGO*</b>
+                                </label>
+                                <br>
+                                <select class="select2 form-select w-100" name="pago" required>
+                                    <option value="">Seleccione el pago</option>
+                                    {% for data in selectPago %}
+                                    <option value="{{data.ID}}">{{data.Descripcion}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label"><input class="form-check-input" type="checkbox" value=""
+                                        id="interesadoCheckbox" checked><b>
+                                        FACTURA *</b></label>
+                                <input type="text" class="form-control" placeholder="Ingrese la factura" name="factura"
+                                    id="facturaInput" required autofocus>
 
-                                    <input type="hidden" name="factura" id="facturaHiddenInput" value="SF">
-                                </div>
-                                <div class="col-6">
-                                    <label class="form-label"><b>MONTO *</b></label>
-                                    <input type="text" class="form-control" name="monto" required
-                                        placeholder="Ingrese el monto" onkeyup="moneda(this);"
-                                        onkeydown="return decimal(event, this)">
-                                </div>
+                                <input type="hidden" name="factura" id="facturaHiddenInput" value="SF">
                             </div>
+                            <div class="col-6">
+                                <label class="form-label"><b>MONTO *</b></label>
+                                <input type="text" class="form-control" name="monto" required
+                                    placeholder="Ingrese el monto" onkeyup="moneda(this);"
+                                    onkeydown="return decimal(event, this)">
+                            </div>
+                        </div>
 
-                            <div class=" mb-3">
-                                <label class="form-label"><b>DESCRIPCIÓN *</b></label>
-                                <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
-                                    name="descripcion" required>
+                        <div class=" mb-3">
+                            <label class="form-label"><b>DESCRIPCIÓN *</b></label>
+                            <input type="text" class="form-control" placeholder="Ingrese una breve descripción"
+                                name="descripcion" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label"><b>PROVEEDOR *</b></label>
+                                <input class="form-control" list="datalistOptions" name="proveedor"
+                                    placeholder="Ingrese el proveedor" required>
+                                <datalist id="datalistOptions">
+                                    {% for proveedores in proveedor %}
+                                    <option value="{{proveedores.Proveedor}}">
+                                        {% endfor %}
+                                </datalist>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    <label class="form-label"><b>PROVEEDOR *</b></label>
-                                    <input class="form-control" list="datalistOptions" name="proveedor"
-                                        placeholder="Ingrese el proveedor" required>
-                                    <datalist id="datalistOptions">
-                                        {% for proveedores in proveedor %}
-                                        <option value="{{proveedores.Proveedor}}">
-                                            {% endfor %}
-                                    </datalist>
-                                </div>
-                                <div class="col-6">
-                                    <label for="fechaFinal" class="form-label"><b>FECHA *</b></label>
-                                    <input type="date" class="form-control" value="{{ fecha_actual }}" name="fecha"
-                                        required>
-                                </div>
+                            <div class="col-6">
+                                <label for="fechaFinal" class="form-label"><b>FECHA *</b></label>
+                                <input type="date" class="form-control" value="{{ fecha_actual }}" name="fecha"
+                                    required>
                             </div>
-                            <hr>
-                            <button type="submit" class="btn btn-primary" name="inicio">Guardar</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        </form>
-                    </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary" name="inicio">Guardar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </form>
                 </div>
             </div>
         </div>
