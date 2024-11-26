@@ -7,9 +7,20 @@
 
 
 <div class="contenedor-2">
-    <h3 class="titulo-contenedor"><strong>GASTOS MENSUALES</strong></h3>
-    <h5 class="texto-contenedor mb-4">Aqui se muestra el avance transurrido en base a la fecha de inicio a la fecha de
-        entrega.</h5>
+    <div class="row">
+        <div class="col-8">
+            <h3 class="titulo-contenedor"><strong>GASTOS MENSUALES</strong></h3>
+          
+        </div>
+        <div class="col-4">
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn-primary me-2" onclick="cambiarColumnas(3)">3 Cards</button>
+                <button class="btn btn-primary" onclick="cambiarColumnas(4)">4 Cards</button>
+            </div>
+        </div>
+    </div>
+
+
     <hr class="mb-4">
     {% if messages %}
     {% for message in messages %}
@@ -60,10 +71,7 @@
         }
     </style>
 
-    <div class="d-flex justify-content-end mb-3">
-        <button class="btn btn-primary me-2" onclick="cambiarColumnas(3)">3 Cards</button>
-        <button class="btn btn-primary" onclick="cambiarColumnas(4)">4 Cards</button>
-    </div>
+
     <div id="contenedor-cards" class="row g-3">
         {% for proyecto in proyectos %}
         <div class="col-lg-4">
