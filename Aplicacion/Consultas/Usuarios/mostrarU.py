@@ -6,7 +6,7 @@ def asignarUsuario(request):
     usuario = User.objects.get(id=IDUsuario)
 
     # Obtener el nuevo grupo
-    IDEmpleado = 1
+    IDEmpleado = 2
     nuevo_grupo = Group.objects.get(id=IDEmpleado)
 
     # Eliminar todos los grupos anteriores del usuario
