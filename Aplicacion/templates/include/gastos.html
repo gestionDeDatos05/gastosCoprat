@@ -4,13 +4,10 @@
 {% block title %}GASTOS POR PROYECTO{% endblock %}
 
 {% block body %}
-
-
 <div class="contenedor-2">
     <div class="row">
         <div class="col-8">
             <h3 class="titulo-contenedor"><strong>GASTOS MENSUALES</strong></h3>
-          
         </div>
         <div class="col-4">
             <div class="d-flex justify-content-end mb-3">
@@ -19,8 +16,6 @@
             </div>
         </div>
     </div>
-
-
     <hr class="mb-4">
     {% if messages %}
     {% for message in messages %}
@@ -70,8 +65,6 @@
             /* Opcional, agrega puntos suspensivos si es necesario */
         }
     </style>
-
-
     <div id="contenedor-cards" class="row g-3">
         {% for proyecto in proyectos %}
         <div class="col-lg-4">

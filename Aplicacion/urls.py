@@ -4,9 +4,18 @@ from Aplicacion.Consultas.Catalogos import agregarC, editarC, mostrarC, actualiz
 from Aplicacion.Consultas.Procesos import agregarP, editarP, mostrarP, actualizarP
 from Aplicacion.Consultas.Subtablas import agregarS, editarS, mostrarS, actualizarS
 from Aplicacion.Consultas.Reportes import mostrarR
-
+from Aplicacion.Consultas.Usuarios import mostrarU
+from django.contrib.auth.views import LoginView, LogoutView
+from .views import CustomLoginView
 urlpatterns = [
      #  Presentacion
+    # USUARIOS LOGIN, REGISTER O LOGOUT
+    path('Logout/', LogoutView.as_view(template_name='Acceso/logout.html'), name='Logout'),
+    path('Login/', CustomLoginView.as_view(), name='Login'),
+    path('Register/', views.Register, name='Register'),
+    path('Asignar_permisos/', mostrarU.asignarUsuario, name='A_Permisos'),
+    path('Usuario/', views.TablaUsuarios, name='T_Usuario'),
+     
     path('', views.inicio, name='T_Inicio'),
     path('GASTOS_MENSUALES/', views.mensual, name='Mensual'),
     

@@ -130,6 +130,7 @@
                         <li class="sidebar-item">
                             <a href="{% url 'T_Mensual' %}" class="sidebar-link pl-5">MENSUAL</a>
                         </li>
+
                     </ul>
                 </li>
                 <hr class="m-0 p-0 text-white">
@@ -139,13 +140,53 @@
                         <span>REPORTES</span>
                     </a>
                 </li>
-                <hr class="m-0 p-0 text-white">
+
+                <hr class="mt-5 p-0 text-white">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#darAltaMensual" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-user"></i>
+                        <span>LOGIN</span>
+                    </a>
+                    <ul id="darAltaMensual" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        {% if perms.Aplicacion.view_tblareadetrabajo %}
+                        <li class="sidebar-item">
+                            <a href="{% url 'T_Usuario' %}" class="sidebar-link pl-5">USUARIOS</a>
+                        </li>
+                        {% endif %}
+                        <li class="sidebar-item">
+                            <a href="{% url 'Login' %}" class="sidebar-link pl-5">INICIAR SESIÓN</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'Register' %}" class="sidebar-link pl-5">REGISTRARSE</a>
+                        </li>
+                        <hr class="m-0 p-0 text-white">
+                        <li class="sidebar-item">
+                            <form method="post" action="{% url 'Logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="sidebar-link pl-5"
+                                    style="background-color: transparent; color: white; border: 0; width: 100%;">
+                                    CERRAR SESIÓN
+                                </button>
+                            </form>
+
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </aside>
         <div class="main p-3">
+            {% if user.is_authenticated %}
+            {% if perms.Aplicacion.add_tblaltaproyecto %}
             {% block body %}
 
             {% endblock %}
+            {% endif %}
+            {% else %}
+            <script>
+                window.location.href = "{% url 'Login' %}";
+            </script>
+            {% endif %}
 
         </div>
     </div>

@@ -3,7 +3,65 @@ from .models import *
 from django.contrib import messages
 from datetime import datetime
 from django.db.models import Sum
+# LLAMAR ARCHIVOS LOCALES
+from django.contrib.auth.models import Group
+from .forms import *
+from .models import *
+import logging
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FUNCION REGISTRO DE USUARIOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+class CustomLoginView(LoginView):
+    template_name = 'Acceso/login.html'
+    def form_invalid(self, form):
+        messages.error(self.request, 'Usuario o contraseña incorrectos.')
+        return super().form_invalid(form)
 
+# ------------------------------------------------------------REGISTRO-------------------------------------------------------------
+def Register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            ultimo_usuario = User.objects.latest('id')
+            default_group = Group.objects.get(name='Usuario')
+            ultimo_usuario.groups.add(default_group)
+            
+            username = form.cleaned_data['username']
+            first_name = request.POST['first_name'].title().strip()
+            last_name = request.POST['last_name'].title().strip()
+            messages.success(request, f'El Usuario con el email "{username}" ha sido creado')
+            return redirect('Login')
+        else:
+            errors = form.errors
+            print(errors) 
+            username_errors = form.errors.get('username')
+            if username_errors:
+                username_error = username_errors[0]
+                messages.error(request, f'Error en el campo "email". Error: Ya existe un usuario con ese email')
+            else:
+                errors = form.errors
+                error_messages = ['{}: {}'.format(field, ', '.join(messages)) for field, messages in errors.items()]
+                error_message = '\n'.join(error_messages)
+                final_message = 'El formulario contiene errores. Por favor, corrígelos:\n{} '.format(error_message)
+                messages.error(request, final_message)
+    else:
+        form = CustomUserCreationForm()
+
+    context = {'form': form}
+    return render(request, 'Acceso/register.html', context)
+
+def TablaUsuarios(request):
+    usuarios_con_grupo = []
+    TUsuarios = User.objects.all()
+
+    for usuario in TUsuarios:
+        is_authenticated = usuario.is_authenticated
+        grupos = usuario.groups.exclude(name='Bloqueado')
+        usuarios_con_grupo.append(
+            {'usuario': usuario, 'is_authenticated': is_authenticated, 'grupos': grupos})
+
+    return render(request, 'Acceso/user.html', {'usuarios_con_grupo': usuarios_con_grupo})
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------VISTA PRICIPAL HOME O INCIIO-----------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

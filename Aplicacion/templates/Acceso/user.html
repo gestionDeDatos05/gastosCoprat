@@ -1,0 +1,63 @@
+{% extends "include/header.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}GASTOS POR PROYECTO{% endblock %}
+
+{% block body %}
+<div class="contenedor-tabla-alta">
+    <h3 class="titulo-contenedor"><a href="{% url 'T_Inicio' %}"><i class="lni lni-chevron-left-circle"></i></a><strong>
+            TABLA DE USUARIOS</strong></h3>
+    <h5 class="texto-contenedor mb-4">{{context.descripcion}}</h5>
+    <hr class="mb-4">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="card card-contenido-alta">
+        <h4><strong>Ver gastos registrados de este proyecto</strong></h4>
+        <hr>
+        <div class="table-responsive" style="max-width: 7000px; overflow-y: auto;">
+            <table class="tabla_id table table-hover custom-hover">
+                <thead>
+                    <tr>
+                        <th>PERMISOS DE</th>
+                        <th>NOMBRE</th>
+                        <th>APELLIDO</th>
+                        <th>EMAIL</th>
+                        <!-- <th>FECHA DE CREACIÓN</th>
+                        <th>ULTIMA CONEXIÓN</th> -->
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in usuarios_con_grupo %}
+                    {% for grupo in item.grupos %}
+                    <tr>
+                        <td>{{ grupo.name }}</td>
+                        <td>{{ item.usuario.first_name }}</td>
+                        <td>{{ item.usuario.last_name }}</td>
+                        <td>{{ item.usuario.username }}</td>
+                        <!-- <td>{{item.usuario.date_joined }}</td>
+                        <td>{{item.usuario.last_login }}</td> -->
+                        <td>
+                            <form action="{% url 'A_Permisos' %}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ item.usuario.id }}" name="id_usuario">
+                                <button class="btn btn-primary btn-sm">Dar acceso</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
